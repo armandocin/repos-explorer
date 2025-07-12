@@ -1,6 +1,6 @@
 import {type JSX} from 'react'
 import Input from '../../../@styleguide/components/Input/Input.tsx'
-import FormStatus from '../../../common/components/FormStatus.tsx'
+import FormStatus from '../../common/components/FormStatus.tsx'
 
 interface SearchFormProps {
   action: (formData: FormData) => void,

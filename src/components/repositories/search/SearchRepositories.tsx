@@ -2,7 +2,7 @@ import React, { type JSX, useActionState } from 'react'
 
 import SearchForm from './SearchForm.tsx'
 
-import searchAction from '../../actions/searchRepositories.ts'
+import searchAction from '../../../actions/repositories/search/searchRepositories.ts'
 
 const SearchRepositories: React.FC = (): JSX.Element => {
   /* HOOKS */

@@ -1,4 +1,4 @@
-import type {SearchState} from '../types'
+import type {SearchState} from '../../../types/repositories/search'
 
 async function searchAction(
   prevState: SearchState,

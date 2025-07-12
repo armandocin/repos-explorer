@@ -1,7 +1,7 @@
 import {
     createBrowserRouter,
 } from 'react-router-dom'
-import Layout from '../common/components/layouts/Layout'
+import Layout from './components/common/components/layouts/Layout.tsx'
 import Search from './pages/Search.tsx'
 
 export default createBrowserRouter([

@@ -1,4 +1,4 @@
-import SearchRepositories from '../../repositories/components/search/SearchRepositories.tsx'
+import SearchRepositories from '../components/repositories/search/SearchRepositories.tsx'
 
 const Search = () => {
   return (
