@@ -1,7 +1,8 @@
 import {
     createBrowserRouter,
 } from 'react-router-dom'
-import Layout from '../components/layouts/Layout'
+import Layout from '../common/components/layouts/Layout'
+import Search from './pages/Search.tsx'
 
 export default createBrowserRouter([
     {
@@ -10,7 +11,7 @@ export default createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <div>Search</div>,
+                element: <Search />,
             },
             {
                 path: '/repos/:id',
