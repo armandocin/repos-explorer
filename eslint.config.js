@@ -9,6 +9,9 @@ export default tseslint.config([
   globalIgnores(['dist']),
   {
     files: ['**/*.{ts,tsx}'],
+    rules: {
+      'semi': ['error', 'never']
+    },
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
