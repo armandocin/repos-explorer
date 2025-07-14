@@ -1,4 +1,5 @@
 import type {SearchState} from '../../../types/repositories/search'
+import {searchRepositories} from '../../../api/repositories/search.ts'
 
 async function searchAction(
   prevState: SearchState,
@@ -18,19 +19,21 @@ async function searchAction(
   }
 
   try {
-    // TODO: replace
-    const response = await fetch(`${encodeURIComponent(query)}`)
+    // TODO dispatch
+    const response = await searchRepositories({ q: query })
 
-    const data = await response.json()
+    const { items, total_count } = response
 
     return {
-      repositories: data,
+      repositories: items,
+      count: total_count,
       error: null,
       lastQuery: query
     }
   } catch (error) {
     return {
       repositories: [],
+      count: 0,
       error: 'Failed to search repositories. Please try again.',
       lastQuery: query
     }

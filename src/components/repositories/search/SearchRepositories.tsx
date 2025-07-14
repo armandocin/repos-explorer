@@ -1,16 +1,20 @@
 import React, { type JSX, useActionState } from 'react'
+import type { SearchState } from '../../../types/repositories/search'
 
 import SearchForm from './SearchForm.tsx'
 
 import searchAction from '../../../actions/repositories/search/searchRepositories.ts'
 
+const INITIAL_SEARCH_STATE: SearchState = {
+  repositories: [], // TODO move in redux store
+  count: 0,
+  error: null,
+  lastQuery: ''
+}
+
 const SearchRepositories: React.FC = (): JSX.Element => {
   /* HOOKS */
-  const [state, formAction] = useActionState(searchAction, {
-    repositories: [],
-    error: null,
-    lastQuery: ''
-  })
+  const [state, formAction] = useActionState(searchAction, INITIAL_SEARCH_STATE)
 
   return (
     <div className='SearchRepositories'>
@@ -29,13 +33,14 @@ const SearchRepositories: React.FC = (): JSX.Element => {
             ? (
             <>
               <h2 className='results-title'>
-                Found {state.repositories.length} repositories for '{state.lastQuery}'
+                Found {state.count} repositories for '{state.lastQuery}'
               </h2>
               <ul className='repository-list'>
-                {/*{state.repositories
+                {state.repositories
                   .map((repo) => (
+                    JSON.stringify(repo)
                   ))
-                }*/}
+                }
               </ul>
             </>
           )
