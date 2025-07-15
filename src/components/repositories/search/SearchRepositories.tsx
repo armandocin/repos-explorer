@@ -1,20 +1,60 @@
 import React, { type JSX, useActionState } from 'react'
-import type { SearchState } from '../../../types/repositories/search'
 
 import SearchForm from './SearchForm.tsx'
+import {searchRepositories} from '../../../stores/slices/repositories.ts'
+import {useAppDispatch, useAppSelector} from '../../../hooks/store.ts'
 
-import searchAction from '../../../actions/repositories/search/searchRepositories.ts'
+export interface SearchState {
+  error: string | null
+  lastQuery: string
+}
 
 const INITIAL_SEARCH_STATE: SearchState = {
-  repositories: [], // TODO move in redux store
-  count: 0,
   error: null,
   lastQuery: ''
 }
 
 const SearchRepositories: React.FC = (): JSX.Element => {
+  /* REDUX STORE */
+  const { items: repositories, totalCount } = useAppSelector(state => state.repositories)
+
   /* HOOKS */
-  const [state, formAction] = useActionState(searchAction, INITIAL_SEARCH_STATE)
+  const [state, formAction] = useActionState(handleSearchAction, INITIAL_SEARCH_STATE)
+  const dispatch = useAppDispatch()
+
+  /* HANDLERS */
+  async function handleSearchAction (
+    prevState: SearchState,
+    formData: FormData
+  ): Promise<SearchState> {
+    const query = formData.get('query')
+
+    if (typeof query !== 'string') {
+      throw Error('Error parsing input')
+    }
+
+    if (!query?.trim()) {
+      return {
+        ...prevState,
+        lastQuery: ''
+      }
+    }
+
+    try {
+      await dispatch(searchRepositories(query))
+
+      return {
+        error: null,
+        lastQuery: query
+      }
+    } catch (error) {
+      console.error(error) // Should be logged somewhere
+      return {
+        error: 'Failed to search repositories. Please try again.',
+        lastQuery: query
+      }
+    }
+  }
 
   return (
     <div className='SearchRepositories'>
@@ -29,14 +69,14 @@ const SearchRepositories: React.FC = (): JSX.Element => {
       )}
 
       <div className='results-container'>
-        {state.repositories.length > 0
+        {repositories.length > 0
             ? (
             <>
               <h2 className='results-title'>
-                Found {state.count} repositories for '{state.lastQuery}'
+                Found {totalCount} repositories for '{state.lastQuery}'
               </h2>
               <ul className='repository-list'>
-                {state.repositories
+                {repositories
                   .map((repo) => (
                     JSON.stringify(repo)
                   ))

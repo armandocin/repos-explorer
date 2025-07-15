@@ -1,9 +1,13 @@
 import { RouterProvider } from "react-router-dom"
 import router from './router.tsx'
+import {Provider} from 'react-redux'
+import {store} from './stores/store.ts'
 
 const App = () => {
   return (
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   )
 }
 
