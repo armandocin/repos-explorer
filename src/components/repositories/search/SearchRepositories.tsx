@@ -1,7 +1,7 @@
 import React, { type JSX, useActionState } from 'react'
 
 import SearchForm from './SearchForm.tsx'
-import {searchRepositories} from '../../../stores/slices/repositories.ts'
+import {searchRepositories, selectRepositories} from '../../../stores/slices/repositories.ts'
 import {useAppDispatch, useAppSelector} from '../../../hooks/store.ts'
 
 export interface SearchState {
@@ -16,7 +16,8 @@ const INITIAL_SEARCH_STATE: SearchState = {
 
 const SearchRepositories: React.FC = (): JSX.Element => {
   /* REDUX STORE */
-  const { items: repositories, totalCount } = useAppSelector(state => state.repositories)
+  const totalCount = useAppSelector(state => state.repositories.totalCount)
+  const repositories = useAppSelector(selectRepositories)
 
   /* HOOKS */
   const [state, formAction] = useActionState(handleSearchAction, INITIAL_SEARCH_STATE)

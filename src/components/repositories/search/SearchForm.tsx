@@ -28,7 +28,6 @@ const SearchForm = ({ action, currentValue, onChange }: SearchFormProps): JSX.El
             Search
           </button>
         </div>
-        {/* hidden button for accessibility */}
         <FormStatus />
       </form>
     </div>
