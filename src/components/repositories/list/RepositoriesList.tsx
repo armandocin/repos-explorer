@@ -2,11 +2,13 @@ import { type JSX } from 'react'
 import type {Repository} from '../../../types/repositories/repository.ts'
 
 import RepositoryCard from './RepositoryCard.tsx'
+import RepositoriesListSkeleton from './skeleton-loaders/RepositoriesListSkeleton.tsx'
 
 import './RepositoriesList.css'
 
 export interface RepositoriesListProps {
-  list: Repository[]
+  list: Repository[],
+  isLoading?: boolean
 }
 
 /**
@@ -17,7 +19,10 @@ export interface RepositoriesListProps {
  * @param {Array} props.list - An array of repository objects to render.
  * @returns {JSX.Element} A JSX element representing the rendered repositories list.
  */
-const RepositoriesList = ({ list }: RepositoriesListProps): JSX.Element => {
+const RepositoriesList = ({ list, isLoading }: RepositoriesListProps): JSX.Element => {
+  if (isLoading) {
+    return <RepositoriesListSkeleton />
+  }
   return (
     <div className='RepositoriesList'>
       {list.map((repo) => (

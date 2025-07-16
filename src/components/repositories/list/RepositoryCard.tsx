@@ -36,16 +36,6 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
         <div className='RepoCard__header-info'>
           <h3 className='RepoCard__title'>
             {fullName}
-            <a
-              className='RepoCard__title-link'
-              href={htmlUrl}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              <span title='Open in GitHub'>
-                <OpenNewIcon />
-              </span>
-            </a>
           </h3>
           <p className='RepoCard__owner'>
             by <a
@@ -57,6 +47,16 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
           </a>
           </p>
         </div>
+        <a
+          className='RepoCard__title-link'
+          href={htmlUrl}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <span title='Open in GitHub'>
+            <OpenNewIcon />
+          </span>
+        </a>
       </div>
 
       <p className='RepoCard__description'>

@@ -6,6 +6,7 @@ import {searchRepositories, selectRepositories} from '../../../stores/slices/rep
 
 import SearchForm from './SearchForm.tsx'
 import RepositoriesList from '../list/RepositoriesList.tsx'
+import WrapWithLoader from '../../common/skeleton-loaders/WrapWithLoader.tsx'
 
 import './SearchRepositories.css'
 
@@ -47,7 +48,7 @@ const SearchRepositories: React.FC = (): JSX.Element => {
   const repositories = useAppSelector(selectRepositories)
 
   /* HOOKS */
-  const [state, formAction] = useActionState(handleSearchAction, INITIAL_SEARCH_STATE)
+  const [state, formAction, isLoading] = useActionState(handleSearchAction, INITIAL_SEARCH_STATE)
   const dispatch = useAppDispatch()
 
   /* HANDLERS */
@@ -84,36 +85,38 @@ const SearchRepositories: React.FC = (): JSX.Element => {
     }
   }
 
+  const showEmptyState = state.lastQuery && !isLoading && !totalCount && !state.error
+
   return (
     <div className='SearchRepositories'>
       <form action={formAction}>
         <SearchForm />
       </form>
 
-      {state.error && (
+      {state.error && !isLoading && (
         <div className='SearchRepositories__error-message' role='alert'>
           {state.error}
         </div>
       )}
 
       <div className='SearchRepositories__results-container'>
-        {repositories.length > 0
-            ? (
-            <>
-              <h2 className='SearchRepositories__results-title'>
-                Found {totalCount} repositories for '{state.lastQuery}'
-              </h2>
-              <RepositoriesList list={repositories} />
-            </>
+        <WrapWithLoader isLoading={isLoading} width='300px' height='20px' variant='rounded' className='SearchRepositories__results-title'>
+          {repositories.length > 0 &&
+            <h2 className='SearchRepositories__results-title'>
+              Found {totalCount} repositories for "{state.lastQuery}"
+            </h2>
+          }
+        </WrapWithLoader>
+        <RepositoriesList list={repositories} isLoading={isLoading} />
+
+        {showEmptyState
+          ? (
+            <p className='SearchRepositories__no-results'>
+              No repositories found for '{state.lastQuery}'. ☹️<br />
+              Don't give up, you can try again!
+            </p>
           )
-          : state.lastQuery && !state.error
-            ? (
-              <p className='SearchRepositories__no-results'>
-                No repositories found for '{state.lastQuery}'. ☹️<br />
-                Don't give up, you can try again!
-              </p>
-            )
-            : null
+          : null
         }
       </div>
     </div>

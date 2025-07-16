@@ -50,14 +50,15 @@
     font-weight: 600;
     line-height: 1.3;
     word-break: break-word;
-
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .RepoCard__title-link {
     display: inline-flex;
+}
+
+.RepoCard__title-link svg {
+    width: 20px;
+    height: 20px;
 }
 
 .RepoCard__link:hover {
