@@ -1,8 +1,13 @@
 import React, { type JSX, useActionState } from 'react'
 
-import SearchForm from './SearchForm.tsx'
-import {searchRepositories, selectRepositories} from '../../../stores/slices/repositories.ts'
 import {useAppDispatch, useAppSelector} from '../../../hooks/store.ts'
+
+import {searchRepositories, selectRepositories} from '../../../stores/slices/repositories.ts'
+
+import SearchForm from './SearchForm.tsx'
+import RepositoriesList from '../list/RepositoriesList.tsx'
+
+import './SearchRepositories.css'
 
 export interface SearchState {
   error: string | null
@@ -14,6 +19,28 @@ const INITIAL_SEARCH_STATE: SearchState = {
   lastQuery: ''
 }
 
+/**
+ * SearchRepositories is a React functional component used for searching and displaying repositories.
+ * It integrates with a Redux store to manage the state of repositories, handles form-based user input,
+ * and displays search results or relevant messages based on the search query and results.
+ *
+ * Features:
+ * - Accepts user input via a search form to query repositories.
+ * - Displays the total count of repositories and a list of results if found.
+ * - Provides feedback on invalid search inputs or errors during the search process.
+ * - Shows appropriate messages for no results or failed search attempts.
+ *
+ * Hooks/Redux:
+ * - Uses `useAppSelector` to access the `totalCount` and `repositories` state from the Redux store.
+ * - Implements `useActionState` for managing the search action state and handling form submission.
+ * - Dispatches the `searchRepositories` action to fetch repository data based on the user's query.
+ *
+ * Error Handling:
+ * - Displays an error message if the search action fails or if the user provides invalid input.
+ *
+ * Returns:
+ * - A JSX element rendering the search form, search results, and error or informational messages.
+ */
 const SearchRepositories: React.FC = (): JSX.Element => {
   /* REDUX STORE */
   const totalCount = useAppSelector(state => state.repositories.totalCount)
@@ -59,35 +86,32 @@ const SearchRepositories: React.FC = (): JSX.Element => {
 
   return (
     <div className='SearchRepositories'>
-      <SearchForm
-        action={formAction}
-      />
+      <form action={formAction}>
+        <SearchForm />
+      </form>
 
       {state.error && (
-        <div className='error-message' role='alert'>
+        <div className='SearchRepositories__error-message' role='alert'>
           {state.error}
         </div>
       )}
 
-      <div className='results-container'>
+      <div className='SearchRepositories__results-container'>
         {repositories.length > 0
             ? (
             <>
-              <h2 className='results-title'>
+              <h2 className='SearchRepositories__results-title'>
                 Found {totalCount} repositories for '{state.lastQuery}'
               </h2>
-              <ul className='repository-list'>
-                {repositories
-                  .map((repo) => (
-                    JSON.stringify(repo)
-                  ))
-                }
-              </ul>
+              <RepositoriesList list={repositories} />
             </>
           )
           : state.lastQuery && !state.error
             ? (
-              <p>No repositories found for '{state.lastQuery}'</p>
+              <p className='SearchRepositories__no-results'>
+                No repositories found for '{state.lastQuery}'. ☹️<br />
+                Don't give up, you can try again!
+              </p>
             )
             : null
         }

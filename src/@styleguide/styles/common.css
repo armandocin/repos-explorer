@@ -1,0 +1,27 @@
+/* Include styleguide styles for HTML main elements */
+a {
+    --main-color: var(--primary-dark-color);
+    --hover-color: var(--primary-color);
+
+    color: var(--main-color);
+    font-weight: 600;
+    line-height: 1.33;
+    text-decoration: none;
+}
+
+a svg {
+    fill: var(--main-color);
+}
+
+a > span {
+    display: inline-flex;
+}
+
+a:hover {
+    color: var(--hover-color);
+    text-decoration: underline;
+}
+
+a:hover svg {
+    fill: var(--hover-color);
+}

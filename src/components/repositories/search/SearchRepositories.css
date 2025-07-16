@@ -1,0 +1,25 @@
+.SearchRepositories__error-message {
+    background-color: var(--error-light);
+    color: var(--error);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-top: 16px;
+}
+
+.SearchRepositories__results-container {
+    margin-top: 32px;
+}
+
+.SearchRepositories__results-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+.SearchRepositories__no-results {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 18px;
+    margin-top: 48px;
+}
