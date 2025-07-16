@@ -6,7 +6,7 @@ import {
   type EntityAdapter
 } from '@reduxjs/toolkit'
 
-import type {Repository} from '../../types/repositories'
+import type {Repository} from '../../types/repositories/repository.ts'
 import type {GitHubSearchResponse} from '../../types/api/search.ts'
 import type {RootState} from '../store.ts'
 
@@ -48,8 +48,8 @@ const repositoriesSlice = createSlice({
       })
       .addCase(searchRepositories.fulfilled, (state, action: PayloadAction<GitHubSearchResponse>) => {
         state.isLoading = false
-        state.totalCount = action.payload.total_count
-        repositoriesAdapter.upsertMany(state, action.payload.items)
+        state.totalCount = action.payload.totalCount
+        repositoriesAdapter.setMany(state, action.payload.items)
       })
       .addCase(searchRepositories.rejected, (state) => {
         state.isLoading = false

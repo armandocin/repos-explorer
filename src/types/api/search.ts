@@ -1,7 +1,7 @@
-import type {Repository} from '../repositories'
+import type {Repository} from '../repositories/repository.ts'
 
 export interface GitHubSearchResponse {
-  total_count: number
-  incomplete_results: boolean
+  totalCount: number
+  incompleteResults: boolean
   items: Repository[]
 }
