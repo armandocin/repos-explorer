@@ -49,7 +49,7 @@ const repositoriesSlice = createSlice({
       .addCase(searchRepositories.fulfilled, (state, action: PayloadAction<GitHubSearchResponse>) => {
         state.isLoading = false
         state.totalCount = action.payload.totalCount
-        repositoriesAdapter.setMany(state, action.payload.items)
+        repositoriesAdapter.setAll(state, action.payload.items)
       })
       .addCase(searchRepositories.rejected, (state) => {
         state.isLoading = false
