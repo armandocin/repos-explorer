@@ -1,5 +1,7 @@
 import React, {type JSX} from 'react'
 
+import './Input.css'
+
 interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   onChange?: (value: string) => void
 }
@@ -18,6 +20,7 @@ const Input = ({
   return (
     <div className='Input'>
       <input
+        className={'Input__element'}
         value={value}
         onChange={handleChange}
         {...rest}

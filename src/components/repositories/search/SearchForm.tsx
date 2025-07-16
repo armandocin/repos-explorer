@@ -1,32 +1,39 @@
-import {type JSX} from 'react'
+import {type JSX, useState} from 'react'
+
 import Input from '../../../@styleguide/components/Input/Input.tsx'
+import Button from '../../../@styleguide/components/Button/Button.tsx'
+
 import FormStatus from '../../common/components/FormStatus.tsx'
 
+import './SearchForm.css'
+
 interface SearchFormProps {
-  action: (formData: FormData) => void,
-  currentValue?: string,
-  onChange?: ((value: string) => void),
+  action: (formData: FormData) => void
 }
 
-const SearchForm = ({ action, currentValue, onChange }: SearchFormProps): JSX.Element => {
+const SearchForm = ({ action }: SearchFormProps): JSX.Element => {
+  // this is to override the default Form Actions behaviour where the form is reset after submit
+  const [currentValue, setCurrentValue] = useState('')
   return (
-    <div className='SearchRepositories__input'>
+    <div className='SearchForm'>
+      <h1>Search GitHub repositories</h1>
       <form action={action}>
-        <div>
+        <div className='SearchForm__input'>
           <Input
             name='query'
             type='search'
             placeholder='Search repositories (press Enter)'
             value={currentValue}
-            onChange={onChange}
+            onChange={(value) => setCurrentValue(value)}
             aria-label='Search repositories'
             autoComplete='off'
             required
+            autoFocus
           />
 
-          <button type='submit'>
+          <Button type='submit'>
             Search
-          </button>
+          </Button>
         </div>
         <FormStatus />
       </form>

@@ -1,0 +1,67 @@
+:root {
+    /* Primary */
+    --primary-color: #00979D;
+    --primary-dark-color: #006C70;
+    --primary-light-color: #4FBCC0;
+    --secondary-color: #FF6F00;
+    --secondary-dark-color: #E55100;
+    --secondary-light-color: #FF8F00;
+
+    /* Grey scale */
+    --grey-900: #1A1A1A;
+    --grey-800: #2D2D2D;
+    --grey-700: #404040;
+    --grey-600: #595959;
+    --grey-500: #737373;
+    --grey-400: #999999;
+    --grey-300: #BFBFBF;
+    --grey-200: #E6E6E6;
+    --grey-100: #F2F2F2;
+    --grey-50: #FAFAFA;
+
+    /* UI Colors */
+    --white: #FFFFFF;
+    --black: #000000;
+    --background: #FFFFFF;
+    --background-dark: #0A0E27;
+    --surface: #F8F9FA;
+    --surface-hover: #F0F2F5;
+
+    /* States */
+    --success: #00C851;
+    --success-light: #E8F5E9;
+    --warning: #FFBB33;
+    --warning-light: #FFF8E1;
+    --error: #FF4444;
+    --error-light: #FFEBEE;
+    --info: #33B5E5;
+    --info-light: #E3F2FD;
+
+    /* Text */
+    --text-primary: var(--grey-900);
+    --text-secondary: var(--grey-600);
+    --text-disabled: var(--grey-400);
+    --text-inverse: var(--white);
+
+    /* Borders */
+    --border-color: var(--grey-200);
+    --border-color-hover: var(--grey-300);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: var(--background-dark);
+        --surface: #1A1F36;
+        --surface-hover: #242B47;
+        --text-primary: var(--grey-100);
+        --text-secondary: var(--grey-400);
+        --border-color: var(--grey-400);
+        --border-color-hover: var(--grey-200);
+    }
+}
