@@ -12,11 +12,15 @@ import type {RootState} from '../store.ts'
 
 import { searchRepositories as searchReposApiRequest } from '../../api/repositories/search.ts'
 
+import config from '../../config'
+
 interface RepositoriesState {
   entities: Record<number, Repository>,
   ids: number[],
   totalCount: number,
-  isLoading: boolean
+  isLoading: boolean,
+  currentPage: number,
+  perPage: number
 }
 
 /* ===== Normalizer ====== */
@@ -24,13 +28,19 @@ export const repositoriesAdapter: EntityAdapter<Repository, number> = createEnti
 
 const initialState: RepositoriesState = repositoriesAdapter.getInitialState({
   totalCount: 0,
-  isLoading: false
+  isLoading: false,
+  currentPage: 1,
+  perPage: config.pageSize
 })
 
 /* ====== Async thunks ====== */
 export const searchRepositories = createAsyncThunk(
   'repositories/search',
-  (query: string): Promise<GitHubSearchResponse> => searchReposApiRequest({q: query})
+  (query: string, { getState }): Promise<GitHubSearchResponse> => {
+    const state = getState() as RootState
+    const { currentPage, perPage } = state.repositories
+    return searchReposApiRequest({ q: query, page: String(currentPage), per_page: String(perPage)  })
+  }
 )
 
 
@@ -39,7 +49,10 @@ const repositoriesSlice = createSlice({
   name: 'repositories',
   initialState,
   reducers: {
-    clearRepositories: () => initialState
+    clearRepositories: () => initialState,
+    setPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = Number(action.payload)
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -62,6 +75,6 @@ const globalizedSelectors = repositoriesAdapter.getSelectors(
   (state: RootState) => state.repositories
 )
 
-export const { clearRepositories } = repositoriesSlice.actions
+export const { clearRepositories, setPage } = repositoriesSlice.actions
 export const { selectAll: selectRepositories } = globalizedSelectors
 export default repositoriesSlice.reducer

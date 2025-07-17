@@ -1,102 +1,65 @@
-import React, { type JSX, useActionState } from 'react'
+import React, {
+  type JSX,
 
-import {useAppDispatch, useAppSelector} from '../../../hooks/store.ts'
+  useCallback } from 'react'
+import { useAppDispatch, useAppSelector } from '../../../hooks/store.ts'
+import useSearchRepositories from '../../../hooks/repositories/search/useSearchRepositories.ts'
 
-import {searchRepositories, selectRepositories} from '../../../stores/slices/repositories.ts'
+import { selectRepositories } from '../../../stores/slices/repositories.ts'
 
+import Text from '../../../@styleguide/components/Text/Text.tsx'
 import SearchForm from './SearchForm.tsx'
 import RepositoriesList from '../list/RepositoriesList.tsx'
 import WrapWithLoader from '../../common/skeleton-loaders/WrapWithLoader.tsx'
-import Text from '../../../@styleguide/components/Text/Text.tsx'
+import PaginationNavbar from '../../common/pagination/PaginationNavbar.tsx'
 
 import './SearchRepositories.css'
 
-export interface SearchState {
-  error: string | null
-  lastQuery: string
-}
-
-const INITIAL_SEARCH_STATE: SearchState = {
-  error: null,
-  lastQuery: ''
-}
-
 /**
- * SearchRepositories is a React functional component used for searching and displaying repositories.
- * It integrates with a Redux store to manage the state of repositories, handles form-based user input,
- * and displays search results or relevant messages based on the search query and results.
+ * SearchRepositories is a React functional component that provides an interface
+ * for users to search for repositories. It integrates with a Redux store for
+ * state management and makes use of custom hooks to handle repository search logic.
+ * The component displays search results, error messages, and allows pagination
+ * of the results.
  *
  * Features:
- * - Accepts user input via a search form to query repositories.
- * - Displays the total count of repositories and a list of results if found.
- * - Provides feedback on invalid search inputs or errors during the search process.
- * - Shows appropriate messages for no results or failed search attempts.
- *
- * Hooks/Redux:
- * - Uses `useAppSelector` to access the `totalCount` and `repositories` state from the Redux store.
- * - Implements `useActionState` for managing the search action state and handling form submission.
- * - Dispatches the `searchRepositories` action to fetch repository data based on the user's query.
- *
- * Error Handling:
- * - Displays an error message if the search action fails or if the user provides invalid input.
- *
- * Returns:
- * - A JSX element rendering the search form, search results, and error or informational messages.
+ * - Search form for entering repository queries.
+ * - Displays loading state while fetching data.
+ * - Handles errors during the search process.
+ * - Displays a list of repositories matching the search query.
+ * - Pagination for browsing through search results.
+ * - Shows an empty state message when no repositories match the query.
  */
 const SearchRepositories: React.FC = (): JSX.Element => {
   /* REDUX STORE */
-  const totalCount = useAppSelector(state => state.repositories.totalCount)
   const repositories = useAppSelector(selectRepositories)
-
-  /* HOOKS */
-  const [state, formAction, isLoading] = useActionState(handleSearchAction, INITIAL_SEARCH_STATE)
+  const { totalCount, currentPage, perPage } = useAppSelector(state => state.repositories)
   const dispatch = useAppDispatch()
 
+  /* HOOKS */
+  const { lastQuery, error, isLoading, onSubmit } = useSearchRepositories()
+
   /* HANDLERS */
-  async function handleSearchAction (
-    prevState: SearchState,
-    formData: FormData
-  ): Promise<SearchState> {
-    const query = formData.get('query')
-
-    if (typeof query !== 'string') {
-      throw Error('Error parsing input')
-    }
-
-    if (!query?.trim()) {
-      return {
-        ...prevState,
-        lastQuery: ''
-      }
-    }
+  const handlePageChange = useCallback(async (page: number) => {
+    if (!lastQuery) return
 
     try {
-      await dispatch(searchRepositories(query))
-
-      return {
-        error: null,
-        lastQuery: query
-      }
-    } catch (error) {
-      console.error(error) // Should be logged somewhere
-      return {
-        error: 'Failed to search repositories. Please try again.',
-        lastQuery: query
-      }
+      await onSubmit(lastQuery, page)
+    } catch (err) {
+      console.error('Failed to change page:', err)
     }
-  }
+  }, [dispatch, lastQuery])
 
-  const showEmptyState = state.lastQuery && !isLoading && !totalCount && !state.error
+  /* RENDER VARIABLES */
+  const showEmptyState = lastQuery && !isLoading && !totalCount && !error
 
   return (
     <div className='SearchRepositories'>
-      <form action={formAction}>
-        <SearchForm />
-      </form>
+      <SearchForm isLoading={isLoading} onSubmit={onSubmit} />
 
-      {state.error && !isLoading && (
+      {error && !isLoading && (
         <div className='SearchRepositories__error-message' role='alert'>
-          {state.error}
+          {error}
         </div>
       )}
 
@@ -104,21 +67,29 @@ const SearchRepositories: React.FC = (): JSX.Element => {
         <WrapWithLoader isLoading={isLoading} width='300px' height='20px' variant='rounded' className='SearchRepositories__results-title'>
           {repositories.length > 0 &&
             <h2 className='SearchRepositories__results-title'>
-              Found {totalCount} repositories for "{state.lastQuery}"
+              Found {totalCount} repositories for "{lastQuery}"
             </h2>
           }
         </WrapWithLoader>
+
         <RepositoriesList list={repositories} isLoading={isLoading} />
 
-        {showEmptyState
-          ? (
-            <Text className='SearchRepositories__no-results' size='intermediate'>
-              No repositories found for '{state.lastQuery}'. ☹️<br />
-              Don't give up, you can try again!
-            </Text>
-          )
-          : null
-        }
+        {!showEmptyState && !error && repositories.length > 0 && (
+          <PaginationNavbar
+            currentPage={currentPage}
+            totalCount={totalCount}
+            perPage={perPage}
+            onPageChange={handlePageChange}
+            disabled={isLoading}
+          />
+        )}
+
+        {showEmptyState && (
+          <Text className='SearchRepositories__no-results' size='intermediate'>
+            No repositories found for '{lastQuery}'. ☹️<br />
+            Don't give up, you can try again!
+          </Text>
+        )}
       </div>
     </div>
   )

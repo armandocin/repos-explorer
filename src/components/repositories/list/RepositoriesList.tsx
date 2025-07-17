@@ -21,7 +21,7 @@ export interface RepositoriesListProps {
  */
 const RepositoriesList = ({ list, isLoading }: RepositoriesListProps): JSX.Element => {
   if (isLoading) {
-    return <RepositoriesListSkeleton />
+    return <RepositoriesListSkeleton count={30} />
   }
   return (
     <div className='RepositoriesList'>
