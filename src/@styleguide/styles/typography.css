@@ -1,0 +1,16 @@
+:root {
+    /* font-size 16px */
+    --display-h1: 3em; /* 48px */
+    --display-h2: 2.75em; /* 44px */
+    --display-h3: 2.25em; /* 36px */
+    --display-h4: 2em; /* 32px */
+
+    --display-large: 1.75rem; /* 28px */
+    --display-big: 1.5rem; /* 24px */
+    --display-medium: 1.25rem; /* 20px */
+    --display-intermediate: 1.125rem; /* 18px */
+    --display-regular: 1rem; /* 16px */
+    --display-small: 0.875rem; /* 14px */
+    --display-xsmall: 0.75rem; /* 12px */
+    --display-2x-small: 0.625rem; /* 10px */
+}

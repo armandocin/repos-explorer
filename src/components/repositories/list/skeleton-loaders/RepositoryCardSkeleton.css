@@ -1,0 +1,9 @@
+.RepoCard--skeleton {
+    pointer-events: none;
+    cursor: default;
+}
+
+.RepoCard--skeleton:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+}

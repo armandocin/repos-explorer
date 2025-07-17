@@ -1,0 +1,162 @@
+@media (prefers-color-scheme: dark) {
+    .RepoCard:hover {
+        --card-background: var(--surface-hover);
+    }
+}
+
+.RepoCard {
+    --card-background: var(--background);
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 0;
+    gap: 16px;
+    padding: 16px;
+
+    background-color: var(--card-background);
+    border-radius: 8px;
+    border: 1px solid var(--surface-hover);
+    transition: all 0.15s ease;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+}
+
+.RepoCard:hover {
+    box-shadow: var(--shadow);
+    transform: scale(1.05);
+}
+
+.RepoCard__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.RepoCard__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.RepoCard__header-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.RepoCard__title {
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+    word-break: break-word;
+}
+
+.RepoCard__title-link {
+    display: inline-flex;
+}
+
+.RepoCard__title-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+.RepoCard__link:hover {
+    text-decoration: underline;
+}
+
+.RepoCard__owner {
+    margin: 0;
+    color: var(--text-secondary);
+}
+
+.RepoCard__description {
+    flex: 1;
+    margin: 0;
+    line-height: 1.6;
+    color: var(--text-primary);
+
+    /* ellipsis on 3rd line */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.RepoCard__footer {
+    margin-top: auto;
+}
+
+.RepoCard__meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.RepoCard__language {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.RepoCard__language-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--grey-400);
+}
+
+/* Colori linguaggi popolari */
+.RepoCard__language-dot[data-language="JavaScript"] {
+    background-color: #f1e05a;
+}
+
+.RepoCard__language-dot[data-language="TypeScript"] {
+    background-color: #3178c6;
+}
+
+.RepoCard__language-dot[data-language="Python"] {
+    background-color: #3572A5;
+}
+
+.RepoCard__language-dot[data-language="Java"] {
+    background-color: #b07219;
+}
+
+.RepoCard__language-dot[data-language="Go"] {
+    background-color: #00ADD8;
+}
+
+.RepoCard__language-dot[data-language="Rust"] {
+    background-color: #dea584;
+}
+
+.RepoCard__language-dot[data-language="C++"] {
+    background-color: #f34b7d;
+}
+
+.RepoCard__language-dot[data-language="Ruby"] {
+    background-color: #701516;
+}
+
+.RepoCard__stars {
+    font-weight: 500;
+}
+
+.RepoCard__private {
+    background-color: var(--grey-100);
+    color: var(--text-secondary);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+    .RepoCard__private {
+        background-color: var(--surface-hover);
+    }
+}

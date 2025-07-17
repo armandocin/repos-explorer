@@ -1,0 +1,26 @@
+.RepositoriesList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-auto-rows: 1fr;
+    gap: 24px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .RepositoriesList {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .RepositoriesList {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.SearchRepositories {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}

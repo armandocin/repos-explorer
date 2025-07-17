@@ -15,6 +15,9 @@ export default tseslint.config([
       reactHooks.configs['recommended-latest'],
       reactRefresh.configs.vite,
     ],
+    rules: {
+      'semi': ['error', 'never']
+    },
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,

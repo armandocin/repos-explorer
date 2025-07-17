@@ -1,0 +1,37 @@
+.Input__element {
+    border-radius: 6px;
+    border: solid 1px var(--border-color);
+    outline: none;
+    color: var(--text-primary);
+    background-color: transparent;
+    box-sizing: border-box;
+    transition: color 0.2s ease;
+    appearance: none;
+    z-index: 1;
+    width: 100%;
+
+    font-size: 16px;
+    line-height: 22px;
+    padding: 7px 14px;
+}
+
+.Input:hover .Input__element {
+    border-color: var(--border-color-hover);
+}
+
+.Input__element:active,
+.Input__element:focus {
+    border-color: var(--border-color-hover);
+    outline: solid 1px var(--border-color-hover);
+}
+
+.Input__element[type="search"] {
+    outline-offset: 0;
+}
+
+input.Input__element[type="search"]::-webkit-search-cancel-button {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    cursor: pointer;
+}
