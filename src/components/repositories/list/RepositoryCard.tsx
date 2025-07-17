@@ -3,6 +3,7 @@ import type { Repository } from '../../../types/repositories/repository.ts'
 
 // @ts-ignore
 import OpenNewIcon from '../../../assets/svg/ic-open-new.svg?react'
+import Text from '../../../@styleguide/components/Text/Text.tsx'
 
 import './RepositoryCard.css'
 
@@ -37,7 +38,7 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
           <h3 className='RepoCard__title'>
             {fullName}
           </h3>
-          <p className='RepoCard__owner'>
+          <Text className='RepoCard__owner' size='small'>
             by <a
             href={owner.htmlUrl}
             target='_blank'
@@ -45,7 +46,7 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
           >
             {owner.login}
           </a>
-          </p>
+          </Text>
         </div>
         <a
           className='RepoCard__title-link'
@@ -59,9 +60,9 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
         </a>
       </div>
 
-      <p className='RepoCard__description'>
+      <Text className='RepoCard__description' size='small'>
         {description || 'No description available'}
-      </p>
+      </Text>
 
       <div className='RepoCard__footer'>
         <div className='RepoCard__meta'>

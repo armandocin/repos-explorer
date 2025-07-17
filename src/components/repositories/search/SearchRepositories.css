@@ -21,6 +21,5 @@
 .SearchRepositories__no-results {
     text-align: center;
     color: var(--text-secondary);
-    font-size: 18px;
     margin-top: 48px;
 }

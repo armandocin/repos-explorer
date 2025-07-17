@@ -25,9 +25,9 @@ const RepositoryCardSkeleton = (): JSX.Element => {
           <h3 className='RepoCard__title'>
             <SkeletonLoader {...textPatterns.subheading} />
           </h3>
-          <p className='RepoCard__owner'>
+          <div className='RepoCard__owner'>
             <SkeletonLoader {...textPatterns.caption} />
-          </p>
+          </div>
         </div>
       </div>
 

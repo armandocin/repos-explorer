@@ -7,6 +7,7 @@ import {searchRepositories, selectRepositories} from '../../../stores/slices/rep
 import SearchForm from './SearchForm.tsx'
 import RepositoriesList from '../list/RepositoriesList.tsx'
 import WrapWithLoader from '../../common/skeleton-loaders/WrapWithLoader.tsx'
+import Text from '../../../@styleguide/components/Text/Text.tsx'
 
 import './SearchRepositories.css'
 
@@ -111,10 +112,10 @@ const SearchRepositories: React.FC = (): JSX.Element => {
 
         {showEmptyState
           ? (
-            <p className='SearchRepositories__no-results'>
+            <Text className='SearchRepositories__no-results' size='intermediate'>
               No repositories found for '{state.lastQuery}'. ☹️<br />
               Don't give up, you can try again!
-            </p>
+            </Text>
           )
           : null
         }

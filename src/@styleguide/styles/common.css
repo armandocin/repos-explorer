@@ -1,4 +1,27 @@
 /* Include styleguide styles for HTML main elements */
+
+/* headings */
+h1 {
+    font-size: var(--display-h1);
+    line-height: 1.1;
+}
+
+h2 {
+    font-size: var(--display-h2);
+    line-height: 1.2;
+}
+
+h3 {
+    font-size: var(--display-h3);
+    line-height: 1.25;
+}
+
+h3 {
+    font-size: var(--display-h4);
+    line-height: 1.3;
+}
+
+/* Anchor */
 a {
     --main-color: var(--primary-dark-color);
     --hover-color: var(--primary-color);

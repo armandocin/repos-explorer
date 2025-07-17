@@ -67,14 +67,12 @@
 
 .RepoCard__owner {
     margin: 0;
-    font-size: 14px;
     color: var(--text-secondary);
 }
 
 .RepoCard__description {
     flex: 1;
     margin: 0;
-    font-size: 14px;
     line-height: 1.6;
     color: var(--text-primary);
 
