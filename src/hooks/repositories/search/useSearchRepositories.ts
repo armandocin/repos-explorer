@@ -1,34 +1,56 @@
-import { useState, useCallback } from 'react'
-import {useAppDispatch} from '../../store.ts'
+import type { Repository } from '../../../types/repositories/repository.ts'
 
-import {searchRepositories, setPage} from '../../../stores/slices/repositories.ts'
+import { useState, useCallback, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../store.ts'
+
+import { searchRepositories, selectRepositories, setPage } from '../../../stores/slices/repositories.ts'
 
 interface UseSearchFormReturn {
+  repositories: Repository[],
+  totalCount: number,
+  currentPage: number,
+  perPage: number,
   lastQuery: string
   error: string | null
   isLoading: boolean
-  onSubmit: (query: string, page?: number) => Promise<void>
+  getRepositoriesByQuery: (query: string, page?: number) => Promise<void>
 }
 
 /**
- * A custom hook to manage the search functionality for repositories.
+ * A custom hook for interacting with a repository search functionality.
  *
- * @param {string} [initialQuery=''] - The initial query to populate the search input.
- * @returns {UseSearchFormReturn} An object containing the current query state, error state, loading state, and a submission handler function.
+ * This hook provides state management and logic for searching repositories,
+ * leveraging local state, URL parameters, and Redux store integration.
+ * It handles query submissions, coordinates with the Redux store,
+ * and manages asynchronous search operations with error handling.
  *
- * @property {string} lastQuery - The last submitted search query.
- * @property {string|null} error - The error message if the search operation fails, otherwise null.
- * @property {boolean} isLoading - Indicates whether a search request is currently in progress.
- * @property {function} onSubmit - A callback function to handle search form submission. It accepts a search query string and an optional page number.
+ * @param {string} [initialQuery=''] - The initial search query, defaults to an empty string.
+ * @returns {UseSearchFormReturn} An object containing state and handlers for repository search:
+ * - `repositories` (Array): The list of repositories fetched from the API.
+ * - `totalCount` (number): The total number of repositories available for the current search query.
+ * - `perPage` (number): The number of repositories displayed per page.
+ * - `currentPage` (number): The current pagination page.
+ * - `lastQuery` (string): The last submitted search query.
+ * - `error` (string|null): The error message, if a search operation fails.
+ * - `isLoading` (boolean): Indicates whether a search operation is in progress.
+ * - `onSubmit` (Function): A function to submit a repository search query and navigate to a specified page.
  */
 const useSearchRepositories = (initialQuery: string = ''): UseSearchFormReturn => {
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  /* LOCAL STATE */
   const [lastQuery, setLastQuery] = useState(initialQuery)
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
+  /* REDUX STORE */
+  const repositories = useAppSelector(selectRepositories)
+  const { totalCount, currentPage, perPage } = useAppSelector(state => state.repositories)
+
   const dispatch = useAppDispatch()
 
-  const onSubmit = useCallback(async (query: string, page: number = 1) => {
+  const getRepositoriesByQuery = useCallback(async (query: string, page: number = 1) => {
     const isNewQuery = query !== lastQuery
 
     if (!query.trim()) return
@@ -43,6 +65,8 @@ const useSearchRepositories = (initialQuery: string = ''): UseSearchFormReturn =
     try {
       dispatch(setPage(page))
 
+      setSearchParams({ q: query, page: String(page) })
+
       await dispatch(searchRepositories(query)).unwrap()
     } catch (err) {
       console.error(err) // should be logged somewhere
@@ -52,11 +76,31 @@ const useSearchRepositories = (initialQuery: string = ''): UseSearchFormReturn =
     }
   }, [dispatch, lastQuery])
 
+  useEffect(() => {
+    if (!lastQuery) {
+      const urlPage = parseInt(searchParams.get('page') || '1')
+      const urlQuery = searchParams.get('q') || ''
+
+      if (urlQuery && !lastQuery) {
+        if (urlPage !== currentPage) {
+          dispatch(setPage(urlPage))
+        }
+
+        getRepositoriesByQuery(urlQuery, urlPage)
+      }
+    }
+  }, [lastQuery, currentPage, dispatch, getRepositoriesByQuery, searchParams])
+
   return {
+    repositories,
+    totalCount,
+    perPage,
+    currentPage,
+
     lastQuery,
     error,
     isLoading,
-    onSubmit
+    getRepositoriesByQuery
   }
 }
 

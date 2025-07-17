@@ -1,11 +1,9 @@
 import React, {
   type JSX,
 
-  useCallback } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../hooks/store.ts'
+  useCallback, useEffect
+} from 'react'
 import useSearchRepositories from '../../../hooks/repositories/search/useSearchRepositories.ts'
-
-import { selectRepositories } from '../../../stores/slices/repositories.ts'
 
 import Text from '../../../@styleguide/components/Text/Text.tsx'
 import SearchForm from './SearchForm.tsx'
@@ -16,46 +14,59 @@ import PaginationNavbar from '../../common/pagination/PaginationNavbar.tsx'
 import './SearchRepositories.css'
 
 /**
- * SearchRepositories is a React functional component that provides an interface
- * for users to search for repositories. It integrates with a Redux store for
- * state management and makes use of custom hooks to handle repository search logic.
- * The component displays search results, error messages, and allows pagination
- * of the results.
+ * SearchRepositories is a React functional component that provides a user interface for searching and displaying a list of repositories.
+ * It includes features such as pagination, displaying error messages, and handling loading states.
  *
- * Features:
- * - Search form for entering repository queries.
- * - Displays loading state while fetching data.
- * - Handles errors during the search process.
- * - Displays a list of repositories matching the search query.
- * - Pagination for browsing through search results.
- * - Shows an empty state message when no repositories match the query.
+ * Functionalities:
+ * - Allows users to search for repositories through a search form.
+ * - Handles the rendering logic and passes the information to the subcomponents with specialized responsibilities
+ *
+ * State and Handlers:
+ * - Utilizes hooks from `useSearchRepositories` to manage state variables such as `repositories`, `totalCount`, `currentPage`, and `perPage`.
+ * - Wraps the function to fetch the repositories getting the page to pass.
+ * - Implements a side-effect to scroll to the top of the page when the current page changes.
+ *
+ * Render Logic:
+ * - Shows a loading indicator while results are being fetched.
+ * - Displays the list of repositories if available, otherwise an appropriate message for empty or error states.
+ * - Allows the user to navigate between pages when repositories are paginated.
  */
 const SearchRepositories: React.FC = (): JSX.Element => {
-  /* REDUX STORE */
-  const repositories = useAppSelector(selectRepositories)
-  const { totalCount, currentPage, perPage } = useAppSelector(state => state.repositories)
-  const dispatch = useAppDispatch()
-
   /* HOOKS */
-  const { lastQuery, error, isLoading, onSubmit } = useSearchRepositories()
+  const {
+    repositories,
+    totalCount,
+    currentPage,
+    perPage,
+
+    lastQuery,
+    error,
+    isLoading,
+    getRepositoriesByQuery,
+  } = useSearchRepositories()
 
   /* HANDLERS */
   const handlePageChange = useCallback(async (page: number) => {
     if (!lastQuery) return
 
     try {
-      await onSubmit(lastQuery, page)
+      await getRepositoriesByQuery(lastQuery, page)
     } catch (err) {
       console.error('Failed to change page:', err)
     }
-  }, [dispatch, lastQuery])
+  }, [lastQuery])
+
+  /* EFFECTS */
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [currentPage])
 
   /* RENDER VARIABLES */
   const showEmptyState = lastQuery && !isLoading && !totalCount && !error
 
   return (
     <div className='SearchRepositories'>
-      <SearchForm isLoading={isLoading} onSubmit={onSubmit} />
+      <SearchForm isLoading={isLoading} onSubmit={getRepositoriesByQuery} />
 
       {error && !isLoading && (
         <div className='SearchRepositories__error-message' role='alert'>

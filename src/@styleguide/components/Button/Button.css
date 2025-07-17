@@ -18,6 +18,7 @@
 }
 
 .Button--md {
+    line-height: 18px;
     padding: 10px 20px;
     font-size: 16px;
 }
