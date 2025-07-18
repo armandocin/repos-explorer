@@ -3,6 +3,7 @@
  *
  * @interface User
  * @property {number} id - The unique identifier for the user.
+ * @property {?string} [name] - The username or login of the user.
  * @property {string} login - The username or login of the user.
  * @property {string} avatarUrl - The URL of the user's avatar image.
  * @property {string} htmlUrl - The URL of the user's profile page.
@@ -10,8 +11,9 @@
  */
 export interface User {
   id: number
+  name?: string,
   login: string,
   avatarUrl: string,
   htmlUrl: string,
-  type: string
+  type: string,
 }

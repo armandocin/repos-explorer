@@ -1,6 +1,8 @@
 import type { JSX } from 'react'
 import type { Repository } from '../../../types/repositories/repository.ts'
 
+import { useNavigate } from 'react-router-dom'
+
 // @ts-ignore
 import OpenNewIcon from '../../../assets/svg/ic-open-new.svg?react'
 import Text from '../../../@styleguide/components/Text/Text.tsx'
@@ -23,10 +25,15 @@ interface RepoCardProps {
  * @returns {JSX.Element} A JSX element representing the repository card.
  */
 const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
-  const { owner, fullName, description, language, stargazersCount, htmlUrl, private: isPrivate } = repository
+  const navigate = useNavigate()
+  const { owner, fullName, name, description, language, stargazersCount, htmlUrl, private: isPrivate } = repository
+
+  const handleOpenDetails = (): void => {
+    navigate(`/repos/${owner.login}/${name}`)
+  }
 
   return (
-    <article className='RepoCard'>
+    <article className='RepoCard' onClick={handleOpenDetails}>
       <div className='RepoCard__header'>
         <img
           className='RepoCard__avatar'

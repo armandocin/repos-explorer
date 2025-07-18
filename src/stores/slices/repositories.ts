@@ -1,3 +1,7 @@
+import type {Repository} from '../../types/repositories/repository.ts'
+import type {GitHubSearchResponse} from '../../types/api/search.ts'
+import type {RootState} from '../store.ts'
+
 import {
   type PayloadAction,
   type EntityAdapter,
@@ -5,14 +9,10 @@ import {
   isPending, isRejected,
   createSlice,
   createEntityAdapter,
-  createAsyncThunk, isAnyOf, isFulfilled
+  isAnyOf, isFulfilled
 } from '@reduxjs/toolkit'
 
-import type {Repository} from '../../types/repositories/repository.ts'
-import type {GitHubSearchResponse} from '../../types/api/search.ts'
-import type {RootState} from '../store.ts'
-
-import { searchRepositories as searchReposApiRequest } from '../../api/repositories/search.ts'
+import { fetchOwnerRepositories, loadRepository, searchRepositories } from '../actions/repositories.ts'
 
 import config from '../../config'
 
@@ -34,24 +34,6 @@ const initialState: RepositoriesState = repositoriesAdapter.getInitialState({
   currentPage: 1,
   perPage: config.pageSize
 })
-
-/* ====== Async thunks ====== */
-export const searchRepositories = createAsyncThunk(
-  'repositories/search',
-  (query: string, { getState }): Promise<GitHubSearchResponse> => {
-    const state = getState() as RootState
-    const { currentPage, perPage } = state.repositories
-    return searchReposApiRequest({ q: query, page: String(currentPage), per_page: String(perPage)  })
-  }
-)
-
-export const fetchOwnerRepositories = createAsyncThunk(
-  'repositories/fetch',
-  () => {
-    // fech repositories by owner
-    return Promise.resolve([])
-  }
-)
 
 const pendingLoadingActions = isPending(searchRepositories, fetchOwnerRepositories)
 const rejectedLoadingActions = isRejected(searchRepositories, fetchOwnerRepositories)
@@ -76,11 +58,17 @@ const repositoriesSlice = createSlice({
       .addMatcher(rejectedLoadingActions, (state) => {
         state.isLoading = false
       })
+
       .addMatcher(isAnyOf(searchRepositories.fulfilled), (state, action: PayloadAction<GitHubSearchResponse>) => {
         state.isLoading = false
         state.totalCount = action.payload.totalCount
         repositoriesAdapter.setAll(state, action.payload.items)
       })
+
+      .addMatcher(isFulfilled(loadRepository), (state, action:PayloadAction<Repository>) => {
+        repositoriesAdapter.upsertOne(state, action.payload)
+      })
+
       .addMatcher(fulfilledListOfReposActions, (state, action: PayloadAction<Repository[]>) => {
         state.isLoading = false
         repositoriesAdapter.setAll(state, action.payload)
@@ -94,5 +82,6 @@ const globalizedSelectors = repositoriesAdapter.getSelectors(
 )
 
 export const { clearRepositories, setPage } = repositoriesSlice.actions
-export const { selectAll: selectRepositories } = globalizedSelectors
+
+export const { selectAll: selectRepositories, selectById: selectRepository } = globalizedSelectors
 export default repositoriesSlice.reducer

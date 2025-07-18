@@ -23,5 +23,15 @@ export interface Repository {
   htmlUrl: string
   language: string
   owner: User
-  stargazersCount: number
+  stargazersCount: number,
+
+  openIssuesCount?: number
+  forksCount?: number
+  watchersCount?: number
+  // contributors?: Contributor[]
+  topics?: string[]
+  license?: string
+  defaultBranch?: string
+  createdAt?: string
+  updatedAt?: string
 }
