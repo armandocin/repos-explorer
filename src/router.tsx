@@ -2,7 +2,8 @@ import {
     createBrowserRouter,
 } from 'react-router-dom'
 import Layout from './components/common/layouts/Layout.tsx'
-import Search from './pages/Search.tsx'
+import Errors from './pages/errors/Errors.tsx'
+import Search from './pages/repositories/Search.tsx'
 
 /**
  * is the function to create the routing rules. The Layout is used as generic layout with header and footer for every pages passed as children.
@@ -12,14 +13,15 @@ export default createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
+        errorElement: <Errors />,
         children: [
             {
                 index: true,
                 element: <Search />,
             },
             {
-                path: '/repos/:id',
-                element: <div>This is a repo</div>,
+                path: '/repos/:owner/:repo',
+                element: <>This is a repo</>,
             }
         ]
     }
