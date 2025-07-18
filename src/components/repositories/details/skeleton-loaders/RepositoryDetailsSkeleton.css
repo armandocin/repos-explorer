@@ -1,0 +1,24 @@
+.RepositoryDetails--skeleton {
+    pointer-events: none;
+    user-select: none;
+}
+
+.RepositoryDetails--skeleton .RepositoryDetails__heading h1,
+.RepositoryDetails--skeleton .RepositoryDetails__heading,
+.RepositoryDetails--skeleton .RepositoryDetails__header-main-info {
+    align-items: center;
+}
+
+.RepositoryDetails--skeleton .RepositoryDetails__stats-card--skeleton {
+    cursor: default;
+}
+
+.RepositoryDetails--skeleton .RepositoryDetails__stats-card--skeleton:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border-color);
+}
+
+.RepositoryDetails__back--skeleton {
+    display: block;
+}

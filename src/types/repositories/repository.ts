@@ -1,4 +1,4 @@
-import type {User} from '../users/user.ts'
+import type { Contributor, User } from '../users/user.ts'
 
 /**
  * Represents a repository with its associated data and metadata.
@@ -23,5 +23,15 @@ export interface Repository {
   htmlUrl: string
   language: string
   owner: User
-  stargazersCount: number
+  stargazersCount: number,
+
+  openIssuesCount?: number
+  forksCount?: number
+  watchersCount?: number
+  contributors?: Contributor[]
+  topics?: string[]
+  license?: Record<string, string>
+  defaultBranch?: string
+  createdAt?: string
+  updatedAt?: string
 }

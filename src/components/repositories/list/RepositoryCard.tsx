@@ -1,9 +1,12 @@
 import type { JSX } from 'react'
 import type { Repository } from '../../../types/repositories/repository.ts'
 
+import { useNavigate } from 'react-router-dom'
+
 // @ts-ignore
 import OpenNewIcon from '../../../assets/svg/ic-open-new.svg?react'
-import Text from '../../../@styleguide/components/Text/Text.tsx'
+import { Avatar, Text } from '../../../@styleguide'
+import LanguageDot from '../../common/repositories/LanguageDot.tsx'
 
 import './RepositoryCard.css'
 
@@ -23,16 +26,20 @@ interface RepoCardProps {
  * @returns {JSX.Element} A JSX element representing the repository card.
  */
 const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
-  const { owner, fullName, description, language, stargazersCount, htmlUrl, private: isPrivate } = repository
+  const navigate = useNavigate()
+  const { owner, fullName, name, description, language, stargazersCount, htmlUrl, private: isPrivate } = repository
+
+  const handleOpenDetails = (): void => {
+    navigate(`/repos/${owner.login}/${name}`)
+  }
 
   return (
-    <article className='RepoCard'>
+    <article className='RepoCard' onClick={handleOpenDetails}>
       <div className='RepoCard__header'>
-        <img
-          className='RepoCard__avatar'
-          src={owner.avatarUrl}
-          alt={`${owner.login} avatar`}
-          loading='lazy'
+        <Avatar
+          size='medium'
+          img={owner.avatarUrl}
+          name={`${owner.login} avatar`}
         />
         <div className='RepoCard__header-info'>
           <h3 className='RepoCard__title'>
@@ -40,6 +47,7 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
           </h3>
           <Text className='RepoCard__owner' size='small'>
             by <a
+            className='Anchor'
             href={owner.htmlUrl}
             target='_blank'
             rel='noopener noreferrer'
@@ -49,7 +57,7 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
           </Text>
         </div>
         <a
-          className='RepoCard__title-link'
+          className='RepoCard__title-link Anchor'
           href={htmlUrl}
           target='_blank'
           rel='noopener noreferrer'
@@ -68,7 +76,7 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
         <div className='RepoCard__meta'>
           {language && (
             <span className='RepoCard__language'>
-              <span className='RepoCard__language-dot' data-language={language}></span>
+              <LanguageDot language={language} />
               {language}
             </span>
           )}

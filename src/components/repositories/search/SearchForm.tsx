@@ -5,8 +5,7 @@ import {
   useState
 } from 'react'
 
-import Input from '../../../@styleguide/components/Input/Input.tsx'
-import Button from '../../../@styleguide/components/Button/Button.tsx'
+import { Button, Input } from '../../../@styleguide'
 
 import './SearchForm.css'
 

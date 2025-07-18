@@ -21,30 +21,33 @@ h3 {
     line-height: 1.3;
 }
 
-/* Anchor */
+/* Anchor (should be a compoent) */
 a {
+    text-decoration: none;
+    margin: 0;
+}
+a.Anchor {
     --main-color: var(--primary-dark-color);
     --hover-color: var(--primary-color);
 
     color: var(--main-color);
     font-weight: 600;
     line-height: 1.33;
-    text-decoration: none;
 }
 
-a svg {
+a.Anchor svg {
     fill: var(--main-color);
 }
 
-a > span {
+a.Anchor > span {
     display: inline-flex;
 }
 
-a:hover {
+a.Anchor:hover {
     color: var(--hover-color);
     text-decoration: underline;
 }
 
-a:hover svg {
+a.Anchor:hover svg {
     fill: var(--hover-color);
 }

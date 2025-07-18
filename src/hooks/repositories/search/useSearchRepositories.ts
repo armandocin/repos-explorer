@@ -4,7 +4,8 @@ import { useState, useCallback, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store.ts'
 
-import { searchRepositories, selectRepositories, setPage } from '../../../stores/slices/repositories.ts'
+import { selectRepositories, setPage } from '../../../stores/slices/repositories.ts'
+import { searchRepositories } from '../../../stores/actions/repositories.ts'
 
 interface UseSearchFormReturn {
   repositories: Repository[],

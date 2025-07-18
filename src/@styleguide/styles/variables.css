@@ -26,6 +26,7 @@
     --background-dark: #0A0E27;
     --surface: #F8F9FA;
     --surface-hover: #F0F2F5;
+    --badge-background-color: rgba(255, 255, 255, 0.2);
 
     /* States */
     --success: #00C851;
@@ -66,5 +67,6 @@
         --text-secondary: var(--grey-300);
         --border-color: var(--grey-400);
         --border-color-hover: var(--grey-200);
+        --badge-background-color: rgba(0, 0, 0, 0.2);
     }
 }
