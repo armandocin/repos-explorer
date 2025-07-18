@@ -1,7 +1,8 @@
 import React from 'react'
-import SkeletonLoader, {
-  type SkeletonLoaderProps
-} from '../../../@styleguide/components/SkeletonLoader/SkeletonLoader.tsx'
+import {
+  type SkeletonLoaderProps,
+  SkeletonLoader
+} from '../../../@styleguide'
 
 interface WrapWithLoader extends SkeletonLoaderProps {
   children: React.ReactNode,

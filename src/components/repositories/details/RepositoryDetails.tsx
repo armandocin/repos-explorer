@@ -8,9 +8,7 @@ import { selectRepository } from '../../../stores/slices/repositories.ts'
 import ArrowLeft from '../../../assets/svg/ic-arrow-left.svg?react'
 import { Link } from 'react-router-dom'
 import LanguageDot from '../../common/repositories/LanguageDot.tsx'
-import Avatar from '../../../@styleguide/components/Avatar/Avatar.tsx'
-import Button from '../../../@styleguide/components/Button/Button.tsx'
-import Text from '../../../@styleguide/components/Text/Text.tsx'
+import { Avatar, Button, Text } from '../../../@styleguide'
 
 import './RepositoryDetails.css'
 

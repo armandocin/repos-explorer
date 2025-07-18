@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../../../@styleguide/components/Button/Button.tsx'
+import { Button } from '../../../@styleguide'
 
 const Error: React.FC = () => {
   return (

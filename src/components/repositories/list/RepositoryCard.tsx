@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 // @ts-ignore
 import OpenNewIcon from '../../../assets/svg/ic-open-new.svg?react'
-import Avatar from '../../../@styleguide/components/Avatar/Avatar.tsx'
-import Text from '../../../@styleguide/components/Text/Text.tsx'
+import { Avatar, Text } from '../../../@styleguide'
 import LanguageDot from '../../common/repositories/LanguageDot.tsx'
 
 import './RepositoryCard.css'

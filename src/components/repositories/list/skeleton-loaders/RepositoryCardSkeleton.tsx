@@ -1,9 +1,9 @@
 import { type JSX } from 'react'
-import SkeletonLoader from '../../../../@styleguide/components/SkeletonLoader/SkeletonLoader'
+import { SkeletonLoader } from '../../../../@styleguide'
 import {
   mediaPatterns,
   textPatterns
-} from '../../../../@styleguide/components/SkeletonLoader/skeleton-patterns.ts'
+} from '../../../../@styleguide'
 import './RepositoryCardSkeleton.css'
 
 /**

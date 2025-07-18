@@ -5,7 +5,7 @@ import React, {
 } from 'react'
 import useSearchRepositories from '../../../hooks/repositories/search/useSearchRepositories.ts'
 
-import Text from '../../../@styleguide/components/Text/Text.tsx'
+import { Text } from '../../../@styleguide'
 import SearchForm from './SearchForm.tsx'
 import RepositoriesList from '../list/RepositoriesList.tsx'
 import WrapWithLoader from '../../common/skeleton-loaders/WrapWithLoader.tsx'
