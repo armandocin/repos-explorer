@@ -12,6 +12,16 @@ import { Avatar, Button, Text } from '../../../@styleguide'
 
 import './RepositoryDetails.css'
 
+/**
+ * Component representing the details of a repository.
+ *
+ * This component is used to display detailed information about a specific
+ * repository, including its main attributes, statistics, topics, and contributors.
+ * It provides interactivity, such as navigation and links to associated pages.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {Promise<number>} props.loadingData - A promise resolving into the repository ID.
+ */
 const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) => {
   const id = use(loadingData)
 

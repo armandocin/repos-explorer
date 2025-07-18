@@ -2,14 +2,14 @@ import { useLoaderData } from 'react-router-dom'
 
 import { Suspense } from 'react'
 import RepositoryDetails from '../../components/repositories/details/RepositoryDetails.tsx'
+import RepositoryDetailsSkeleton from '../../components/repositories/details/skeleton-loaders/RepositoryDetailsSkeleton.tsx'
 
 const Repository = () => {
   const { loadingRepository } = useLoaderData()
 
   return (
     <div className='Container'>
-      {/* TODO replace with skeleton */}
-      <Suspense fallback='Loading...'>
+      <Suspense fallback={<RepositoryDetailsSkeleton />}>
         <RepositoryDetails
           loadingData={loadingRepository}
         />
