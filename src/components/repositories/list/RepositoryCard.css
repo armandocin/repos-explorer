@@ -1,6 +1,8 @@
 @media (prefers-color-scheme: dark) {
-    .RepoCard:hover {
-        --card-background: var(--surface-hover);
+    :root:not([data-theme='light']) {
+        .RepoCard:hover {
+            --card-background: var(--surface-hover);
+        }
     }
 }
 
@@ -21,6 +23,7 @@
 }
 
 .RepoCard:hover {
+    --card-background: var(--surface);
     box-shadow: var(--shadow);
     transform: scale(1.05);
 }
@@ -109,7 +112,9 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    .RepoCard__private {
-        background-color: var(--surface-hover);
+    :root:not([data-theme='light']) {
+        .RepoCard__private {
+            background-color: var(--surface-hover);
+        }
     }
 }

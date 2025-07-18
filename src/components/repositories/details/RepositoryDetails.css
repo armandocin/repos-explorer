@@ -60,8 +60,8 @@
     margin: 10px 0;
     border-radius: 6px;
     color: var(--text-secondary);
-    background-color: var(--grey-600);
-    border: 2px solid var(--border-color);
+    background-color: var(--grey-200);
+    border: 2px solid var(--secondary-color);
 }
 
 .RepositoryDetails__description {
@@ -113,6 +113,7 @@
 a > .RepositoryDetails__stats-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow);
+    background-color: var(--surface-hover);
     border-color: var(--border-color-hover);
 }
 
@@ -185,22 +186,19 @@ a > .RepositoryDetails__stats-card:hover {
 
 /* Dark mode adjustments */
 @media (prefers-color-scheme: dark) {
-    .RepositoryDetails__stats-card {
-        background-color: var(--surface);
-        border-color: var(--grey-700);
-    }
+    :root:not([data-theme='light']) {
+        .RepositoryDetails__stats-card,
+        .RepositoryDetails__info {
+            border-color: var(--grey-700);
+        }
 
-    a .RepositoryDetails__stats-card:hover {
-        background-color: var(--surface-hover);
-    }
+        .RepositoryDetails__header {
+            border-bottom-color: var(--grey-700);
+        }
 
-    .RepositoryDetails__info {
-        background-color: var(--surface);
-        border-color: var(--grey-700);
-    }
-
-    .RepositoryDetails__header {
-        border-bottom-color: var(--grey-700);
+        .RepositoryDetails__visibility-badge {
+            background-color: var(--grey-600);
+        }
     }
 }
 
