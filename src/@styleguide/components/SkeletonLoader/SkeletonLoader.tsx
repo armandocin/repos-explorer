@@ -77,15 +77,15 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
         ...style
       }}
       aria-label={ariaLabel}
-      aria-busy="true"
-      role="status"
+      aria-busy='true'
+      role='status'
     />
   )
 
   // Handle multi-line text variant
   if (variant === 'text' && lines > 1) {
     return (
-      <div className="SkeletonLoader__text-container" style={{ gap: `${lineGap}px` }}>
+      <div className='SkeletonLoader__text-container' style={{ gap: `${lineGap}px` }}>
         {Array.from({ length: lines }).map((_, index) => {
           const isLastLine = index === lines - 1
           const lineWidth = isLastLine ? `${lastLineWidth}%` : getSize(width)

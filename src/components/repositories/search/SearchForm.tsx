@@ -1,33 +1,53 @@
-import {type JSX, useState} from 'react'
+import {
+  type JSX,
+  type FormEvent,
 
-import {useFormStatus} from 'react-dom'
+  useState
+} from 'react'
 
 import Input from '../../../@styleguide/components/Input/Input.tsx'
 import Button from '../../../@styleguide/components/Button/Button.tsx'
 
 import './SearchForm.css'
 
+interface SearchFormProps {
+  isLoading: boolean
+  onSubmit: (query: string) => Promise<void>
+}
+
 /**
- * A functional component representing a search form for querying GitHub repositories.
+ * SearchForm component.
  *
- * This form allows users to search GitHub repositories using a query string. The form provides
- * an input field for entering a search term and a button to submit the query. The search operation
- * is disabled when no input is provided or when a search request is already pending.
+ * This functional component renders a search form used to search GitHub repositories.
+ * It includes an input field for user queries and a submit button.
  *
- * IMPORTANT: must be used as child of a <form/>
+ * Props:
+ * - `isLoading` (boolean): Indicates whether a search operation is in progress.
+ * - `onSubmit` (function): Callback function invoked when the form is submitted successfully. It receives the current search query as an argument.
  *
- * Returns:
- * A JSX element that renders the search form, consisting of a titled header, an input field for
- * query input, and a submit button.
+ * Internal State:
+ * - `currentValue` (string): Maintains the current value of the search input field.
+ *
+ * Rendered Elements:
+ * - A form element with a header, input field, and a submit button.
+ *
+ * Behavior:
+ * - Prevents form submission if the search query is empty.
+ * - Disables the submit button if the search query is empty or a search operation is loading.
+ * - Executes the `onSubmit` prop with the current query upon valid form submission.
  */
-const SearchForm = (): JSX.Element => {
-  // this is to override the default Form Actions behaviour where the form is reset after submit
+const SearchForm = ({ isLoading, onSubmit }: SearchFormProps): JSX.Element => {
   const [currentValue, setCurrentValue] = useState('')
 
-  const { pending } = useFormStatus()
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (currentValue) {
+      await onSubmit(currentValue)
+    }
+  }
 
   return (
-    <div className='SearchForm'>
+    <form className='SearchForm' onSubmit={handleSubmit}>
       <h1>Search GitHub repositories</h1>
       <div className='SearchForm__input'>
         <Input
@@ -35,18 +55,18 @@ const SearchForm = (): JSX.Element => {
           type='search'
           placeholder='Search repositories (press Enter)'
           value={currentValue}
-          onChange={(value) => setCurrentValue(value)}
+          onChange={setCurrentValue}
           aria-label='Search repositories'
           autoComplete='off'
           required
           autoFocus
         />
 
-        <Button type='submit' disabled={!currentValue || pending}>
+        <Button type='submit' disabled={!currentValue || isLoading}>
           Search
         </Button>
       </div>
-    </div>
+    </form>
   )
 }
 
