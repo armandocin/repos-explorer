@@ -1,9 +1,11 @@
 import {
-  createAsyncThunk,
+  type PayloadAction,
+  type EntityAdapter,
+
+  isPending, isRejected,
   createSlice,
   createEntityAdapter,
-  type PayloadAction,
-  type EntityAdapter
+  createAsyncThunk, isAnyOf, isFulfilled
 } from '@reduxjs/toolkit'
 
 import type {Repository} from '../../types/repositories/repository.ts'
@@ -43,6 +45,18 @@ export const searchRepositories = createAsyncThunk(
   }
 )
 
+export const fetchOwnerRepositories = createAsyncThunk(
+  'repositories/fetch',
+  () => {
+    // fech repositories by owner
+    return Promise.resolve([])
+  }
+)
+
+const pendingLoadingActions = isPending(searchRepositories, fetchOwnerRepositories)
+const rejectedLoadingActions = isRejected(searchRepositories, fetchOwnerRepositories)
+const fulfilledListOfReposActions = isFulfilled(fetchOwnerRepositories)
+
 
 /* ====== Create store slice ====== */
 const repositoriesSlice = createSlice({
@@ -56,16 +70,20 @@ const repositoriesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(searchRepositories.pending, (state) => {
+      .addMatcher(pendingLoadingActions, (state) => {
         state.isLoading = true
       })
-      .addCase(searchRepositories.fulfilled, (state, action: PayloadAction<GitHubSearchResponse>) => {
+      .addMatcher(rejectedLoadingActions, (state) => {
+        state.isLoading = false
+      })
+      .addMatcher(isAnyOf(searchRepositories.fulfilled), (state, action: PayloadAction<GitHubSearchResponse>) => {
         state.isLoading = false
         state.totalCount = action.payload.totalCount
         repositoriesAdapter.setAll(state, action.payload.items)
       })
-      .addCase(searchRepositories.rejected, (state) => {
+      .addMatcher(fulfilledListOfReposActions, (state, action: PayloadAction<Repository[]>) => {
         state.isLoading = false
+        repositoriesAdapter.setAll(state, action.payload)
       })
   }
 })
