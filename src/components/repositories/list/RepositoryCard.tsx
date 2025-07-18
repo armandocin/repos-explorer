@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 // @ts-ignore
 import OpenNewIcon from '../../../assets/svg/ic-open-new.svg?react'
 import Text from '../../../@styleguide/components/Text/Text.tsx'
+import LanguageDot from '../../common/repositories/LanguageDot.tsx'
 
 import './RepositoryCard.css'
 
@@ -75,7 +76,7 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
         <div className='RepoCard__meta'>
           {language && (
             <span className='RepoCard__language'>
-              <span className='RepoCard__language-dot' data-language={language}></span>
+              <LanguageDot language={language} />
               {language}
             </span>
           )}

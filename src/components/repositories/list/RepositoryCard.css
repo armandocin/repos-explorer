@@ -102,46 +102,6 @@
     gap: 6px;
 }
 
-.RepoCard__language-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: var(--grey-400);
-}
-
-/* Colori linguaggi popolari */
-.RepoCard__language-dot[data-language="JavaScript"] {
-    background-color: #f1e05a;
-}
-
-.RepoCard__language-dot[data-language="TypeScript"] {
-    background-color: #3178c6;
-}
-
-.RepoCard__language-dot[data-language="Python"] {
-    background-color: #3572A5;
-}
-
-.RepoCard__language-dot[data-language="Java"] {
-    background-color: #b07219;
-}
-
-.RepoCard__language-dot[data-language="Go"] {
-    background-color: #00ADD8;
-}
-
-.RepoCard__language-dot[data-language="Rust"] {
-    background-color: #dea584;
-}
-
-.RepoCard__language-dot[data-language="C++"] {
-    background-color: #f34b7d;
-}
-
-.RepoCard__language-dot[data-language="Ruby"] {
-    background-color: #701516;
-}
-
 .RepoCard__stars {
     font-weight: 500;
 }

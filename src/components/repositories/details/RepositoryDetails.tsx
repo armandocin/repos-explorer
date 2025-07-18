@@ -4,10 +4,13 @@ import useGoBack from '../../../hooks/common/router/useGoBack.ts'
 
 import { selectRepository } from '../../../stores/slices/repositories.ts'
 
+// @ts-ignore
+import ArrowLeft from '../../../assets/svg/ic-arrow-left.svg?react'
 import { Link } from 'react-router-dom'
 import Button from '../../../@styleguide/components/Button/Button.tsx'
 
 import './RepositoryDetails.css'
+import LanguageDot from '../../common/repositories/LanguageDot.tsx'
 
 const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) => {
   const id = use(loadingData)
@@ -18,28 +21,28 @@ const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) =>
 
   return (
     <div className='RepositoryDetails'>
-        <Button
-          className='RepositoryDetails__back'
-          onClick={() => goBack({ fallback: '/' })}
-        >
-          ← Back to search
-        </Button>
-
         <header className='RepositoryDetails__header'>
-          <h1>
-            <img
-              src={repository.owner?.avatarUrl}
-              alt={repository.owner?.name}
-              className='RepositoryDetails__owner-avatar'
-            />
-            <Link to={repository.owner?.htmlUrl} target='_blank' rel='noopener noreferrer'>
-              {repository.owner?.name}
-            </Link>
-            {' / '}
-            <Link to={repository.htmlUrl} target='_blank' rel='noopener noreferrer'>
-              {repository.name}
-            </Link>
-          </h1>
+          <div className='RepositoryDetails__header-main-info'>
+            <Button
+              theme='ghost'
+              size='md'
+              className='RepositoryDetails__back'
+              onClick={() => goBack({ fallback: '/' })}
+            >
+              <ArrowLeft />
+            </Button>
+
+            <h1>
+              <img
+                src={repository.owner?.avatarUrl}
+                alt={repository.owner?.name}
+                className='RepositoryDetails__owner-avatar'
+              />
+              <Link to={repository.htmlUrl} target='_blank' rel='noopener noreferrer'>
+                {repository.fullName}
+              </Link>
+            </h1>
+          </div>
 
           {repository.description && (
             <p className='RepositoryDetails__description'>{repository.description}</p>
@@ -48,35 +51,35 @@ const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) =>
         </header>
 
         <section className='RepositoryDetails__stats'>
-          <div className='stat-card'>
-            <span className='stat-icon'>⭐</span>
+          <div className='RepositoryDetails__stats-card'>
+            <span className='RepositoryDetails__stats-icon'>⭐</span>
             <div>
-              <div className='stat-value'>{repository.stargazersCount.toLocaleString()}</div>
-              <div className='stat-label'>Stars</div>
+              <div className='RepositoryDetails__stats-value'>{repository.stargazersCount.toLocaleString()}</div>
+              <div className='RepositoryDetails__stats-label'>Stars</div>
             </div>
           </div>
 
-          <div className='stat-card'>
-            <span className='stat-icon'>🍴</span>
+          <div className='RepositoryDetails__stats-card'>
+            <span className='RepositoryDetails__stats-icon'>🍴</span>
             <div>
-              <div className='stat-value'>{repository.forksCount?.toLocaleString() || '0'}</div>
-              <div className='stat-label'>Forks</div>
+              <div className='RepositoryDetails__stats-value'>{repository.forksCount?.toLocaleString() || '0'}</div>
+              <div className='RepositoryDetails__stats-label'>Forks</div>
             </div>
           </div>
 
-          <div className='stat-card'>
-            <span className='stat-icon'>👁</span>
+          <div className='RepositoryDetails__stats-card'>
+            <span className='RepositoryDetails__stats-icon'>👁</span>
             <div>
-              <div className='stat-value'>{repository.watchersCount?.toLocaleString() || '0'}</div>
-              <div className='stat-label'>Watchers</div>
+              <div className='RepositoryDetails__stats-value'>{repository.watchersCount?.toLocaleString() || '0'}</div>
+              <div className='RepositoryDetails__stats-label'>Watchers</div>
             </div>
           </div>
 
-          <div className='stat-card'>
-            <span className='stat-icon'>🐛</span>
+          <div className='RepositoryDetails__stats-card'>
+            <span className='RepositoryDetails__stats-icon'>🐛</span>
             <div>
-              <div className='stat-value'>{repository.openIssuesCount?.toLocaleString() || '0'}</div>
-              <div className='stat-label'>Open Issues</div>
+              <div className='RepositoryDetails__stats-value'>{repository.openIssuesCount?.toLocaleString() || '0'}</div>
+              <div className='RepositoryDetails__stats-label'>Open Issues</div>
             </div>
           </div>
         </section>
@@ -86,7 +89,7 @@ const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) =>
             {repository.language && (
               <div className='info-item'>
                 <span className='info-label'>Language:</span>
-                <span className='info-value'>{repository.language}</span>
+                <span className='info-value'><LanguageDot language={repository.language} /> {repository.language}</span>
               </div>
             )}
 

@@ -1,0 +1,39 @@
+.LanguageDot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--grey-400);
+}
+
+.LanguageDot[data-language="JavaScript"] {
+    background-color: #f1e05a;
+}
+
+.LanguageDot[data-language="TypeScript"] {
+    background-color: #3178c6;
+}
+
+.LanguageDot[data-language="Python"] {
+    background-color: #3572A5;
+}
+
+.LanguageDot[data-language="Java"] {
+    background-color: #b07219;
+}
+
+.LanguageDot[data-language="Go"] {
+    background-color: #00ADD8;
+}
+
+.LanguageDot[data-language="Rust"] {
+    background-color: #dea584;
+}
+
+.LanguageDot[data-language="C++"] {
+    background-color: #f34b7d;
+}
+
+.LanguageDot[data-language="Ruby"] {
+    background-color: #701516;
+}
