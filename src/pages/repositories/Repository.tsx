@@ -10,7 +10,9 @@ const Repository = () => {
     <div className='Container'>
       {/* TODO replace with skeleton */}
       <Suspense fallback='Loading...'>
-        <RepositoryDetails loadingData={loadingRepository} />
+        <RepositoryDetails
+          loadingData={loadingRepository}
+        />
       </Suspense>
     </div>
   )

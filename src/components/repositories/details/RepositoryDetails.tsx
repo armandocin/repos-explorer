@@ -8,7 +8,9 @@ import { selectRepository } from '../../../stores/slices/repositories.ts'
 import ArrowLeft from '../../../assets/svg/ic-arrow-left.svg?react'
 import { Link } from 'react-router-dom'
 import LanguageDot from '../../common/repositories/LanguageDot.tsx'
+import Avatar from '../../../@styleguide/components/Avatar/Avatar.tsx'
 import Button from '../../../@styleguide/components/Button/Button.tsx'
+import Text from '../../../@styleguide/components/Text/Text.tsx'
 
 import './RepositoryDetails.css'
 
@@ -34,10 +36,10 @@ const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) =>
 
             <div className='RepositoryDetails__heading'>
               <h1>
-                <img
-                  src={repository.owner?.avatarUrl}
-                  alt={repository.owner?.name}
-                  className='RepositoryDetails__owner-avatar'
+                <Avatar
+                  img={repository.owner?.avatarUrl}
+                  name={repository.owner?.name || 'owner avatar'}
+                  size='large'
                 />
                 <Link className='Anchor' to={repository.htmlUrl} target='_blank' rel='noopener noreferrer'>
                   {repository.fullName}
@@ -104,25 +106,25 @@ const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) =>
         </section>
 
         <section className='RepositoryDetails__info'>
-          <div className='info-grid'>
+          <div className='RepositoryDetails__info-grid'>
             {repository.language && (
-              <div className='info-item'>
-                <span className='info-label'>Language:</span>
-                <span className='info-value'><LanguageDot language={repository.language} /> {repository.language}</span>
+              <div className='RepositoryDetails__info-item'>
+                <span className='RepositoryDetails__info-label'>Language:</span>
+                <span className='RepositoryDetails__info-value'><LanguageDot language={repository.language} /> {repository.language}</span>
               </div>
             )}
 
             {repository.license && (
-              <div className='info-item'>
-                <span className='info-label'>License:</span>
-                <span className='info-value'>{repository.license?.name || '–'}</span>
+              <div className='RepositoryDetails__info-item'>
+                <span className='RepositoryDetails__info-label'>License:</span>
+                <span className='RepositoryDetails__info-value'>{repository.license?.name || '–'}</span>
               </div>
             )}
 
             {repository.defaultBranch && (
-              <div className='info-item'>
-                <span className='info-label'>Default Branch:</span>
-                <span className='info-value'>{repository.defaultBranch}</span>
+              <div className='RepositoryDetails__info-item'>
+                <span className='RepositoryDetails__info-label'>Default Branch:</span>
+                <span className='RepositoryDetails__info-value'>{repository.defaultBranch}</span>
               </div>
             )}
 
@@ -136,6 +138,36 @@ const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) =>
             )}
           </div>
         </section>
+
+      {repository.contributors && repository.contributors.length > 0 && (
+        <section className='RepositoryDetails__contributors'>
+          <h4>Top Contributors</h4>
+          <div className='RepositoryDetails__contributors-grid'>
+            {repository.contributors.map(contributor => (
+              <div>
+                <Link
+                  key={contributor.id}
+                  to={contributor.htmlUrl}
+                  target='_blank'
+                  className='RepositoryDetails__contributors-avatar'
+                >
+                  <Avatar
+                    img={contributor.avatarUrl}
+                    name={contributor.login}
+                    size='medium'
+                  />
+                </Link>
+                <div className='RepositoryDetails__contributors-info'>
+                  <Text><strong>{contributor.login}</strong></Text>
+                  <Text size='small'>
+                    {contributor.contributions} contributions
+                  </Text>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   )
 }

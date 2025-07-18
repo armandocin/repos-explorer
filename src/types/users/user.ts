@@ -17,3 +17,7 @@ export interface User {
   htmlUrl: string,
   type: string,
 }
+
+export interface Contributor extends User {
+  contributions: number
+}

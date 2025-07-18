@@ -18,7 +18,6 @@ const RepositoryCardSkeleton = (): JSX.Element => {
     <article className='RepoCard RepoCard--skeleton' aria-label='Loading repository'>
       <div className='RepoCard__header'>
         <SkeletonLoader
-          className='RepoCard__avatar'
           {...mediaPatterns.avatar}
         />
         <div className='RepoCard__header-info'>

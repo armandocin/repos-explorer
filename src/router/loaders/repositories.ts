@@ -3,7 +3,7 @@ import type { LoaderFunctionArgs } from 'react-router-dom'
 import { store } from '../../stores/store'
 import { unwrapResult } from '@reduxjs/toolkit'
 
-import {loadRepository} from '../../stores/actions/repositories.ts'
+import { loadRepository } from '../../stores/actions/repositories.ts'
 
 export const repositoryDetailsLoader = async ({ params }: LoaderFunctionArgs) => {
   const { owner, repo } = params

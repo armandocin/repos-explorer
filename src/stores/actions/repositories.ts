@@ -5,13 +5,21 @@ import type { Repository } from '../../types/repositories/repository.ts'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 import { searchRepositories as searchReposApiRequest } from '../../api/endpoints/search.ts'
-import { fetchRepository } from '../../api/endpoints/repos.ts'
+import { fetchContributors, fetchRepository } from '../../api/endpoints/repos.ts'
 
 /* ====== Async thunks ====== */
 export const loadRepository = createAsyncThunk(
   'repositories/fetchOwnerRepository',
-  ({ owner, repo }: { owner: string; repo: string }): Promise<Repository> => {
-    return fetchRepository(owner, repo)
+  async ({ owner, repo }: { owner: string; repo: string }): Promise<Repository> => {
+    const [repository, contributors] = await Promise.all([
+      fetchRepository(owner, repo),
+      fetchContributors(owner, repo, { per_page: '10' })
+    ])
+
+    return {
+      ...repository,
+      contributors
+    }
   }
 )
 

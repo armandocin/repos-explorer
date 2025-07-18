@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 // @ts-ignore
 import OpenNewIcon from '../../../assets/svg/ic-open-new.svg?react'
+import Avatar from '../../../@styleguide/components/Avatar/Avatar.tsx'
 import Text from '../../../@styleguide/components/Text/Text.tsx'
 import LanguageDot from '../../common/repositories/LanguageDot.tsx'
 
@@ -36,11 +37,10 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
   return (
     <article className='RepoCard' onClick={handleOpenDetails}>
       <div className='RepoCard__header'>
-        <img
-          className='RepoCard__avatar'
-          src={owner.avatarUrl}
-          alt={`${owner.login} avatar`}
-          loading='lazy'
+        <Avatar
+          size='medium'
+          img={owner.avatarUrl}
+          name={`${owner.login} avatar`}
         />
         <div className='RepoCard__header-info'>
           <h3 className='RepoCard__title'>
