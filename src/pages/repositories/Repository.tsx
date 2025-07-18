@@ -8,7 +8,7 @@ const Repository = () => {
   const { loadingRepository } = useLoaderData()
 
   return (
-    <div className='Container'>
+    <div className='Container Page'>
       <Suspense fallback={<RepositoryDetailsSkeleton />}>
         <RepositoryDetails
           loadingData={loadingRepository}
