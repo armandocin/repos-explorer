@@ -6,7 +6,7 @@ const Error: React.FC = () => {
     <div style={{textAlign: 'center', padding: '2rem'}}>
       <h1>An error occurred</h1>
       <h3>Oops! Something went wrong</h3>
-      <a href="/public">
+      <a href='/'>
         <Button theme='primary'>
           Go back to the homepage
         </Button>

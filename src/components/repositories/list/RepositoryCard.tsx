@@ -48,6 +48,7 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
           </h3>
           <Text className='RepoCard__owner' size='small'>
             by <a
+            className='Anchor'
             href={owner.htmlUrl}
             target='_blank'
             rel='noopener noreferrer'
@@ -57,7 +58,7 @@ const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
           </Text>
         </div>
         <a
-          className='RepoCard__title-link'
+          className='RepoCard__title-link Anchor'
           href={htmlUrl}
           target='_blank'
           rel='noopener noreferrer'

@@ -7,10 +7,10 @@ import { selectRepository } from '../../../stores/slices/repositories.ts'
 // @ts-ignore
 import ArrowLeft from '../../../assets/svg/ic-arrow-left.svg?react'
 import { Link } from 'react-router-dom'
+import LanguageDot from '../../common/repositories/LanguageDot.tsx'
 import Button from '../../../@styleguide/components/Button/Button.tsx'
 
 import './RepositoryDetails.css'
-import LanguageDot from '../../common/repositories/LanguageDot.tsx'
 
 const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) => {
   const id = use(loadingData)
@@ -25,29 +25,42 @@ const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) =>
           <div className='RepositoryDetails__header-main-info'>
             <Button
               theme='ghost'
-              size='md'
+              size='lg'
               className='RepositoryDetails__back'
               onClick={() => goBack({ fallback: '/' })}
             >
               <ArrowLeft />
             </Button>
 
-            <h1>
-              <img
-                src={repository.owner?.avatarUrl}
-                alt={repository.owner?.name}
-                className='RepositoryDetails__owner-avatar'
-              />
-              <Link to={repository.htmlUrl} target='_blank' rel='noopener noreferrer'>
-                {repository.fullName}
-              </Link>
-            </h1>
+            <div className='RepositoryDetails__heading'>
+              <h1>
+                <img
+                  src={repository.owner?.avatarUrl}
+                  alt={repository.owner?.name}
+                  className='RepositoryDetails__owner-avatar'
+                />
+                <Link className='Anchor' to={repository.htmlUrl} target='_blank' rel='noopener noreferrer'>
+                  {repository.fullName}
+                </Link>
+              </h1>
+
+              <div className='Badge RepositoryDetails__visibility-badge'>
+                {repository.private ? 'Private' : 'Public'}
+              </div>
+            </div>
           </div>
 
           {repository.description && (
             <p className='RepositoryDetails__description'>{repository.description}</p>
           )}
 
+          {repository.topics && repository.topics.length > 0 && (
+            <div className='RepositoryDetails__topics'>
+              {repository.topics.map(topic => (
+                <span key={topic} className='Badge RepositoryDetails__topic-badge'>{topic}</span>
+              ))}
+            </div>
+          )}
         </header>
 
         <section className='RepositoryDetails__stats'>
@@ -59,29 +72,35 @@ const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) =>
             </div>
           </div>
 
-          <div className='RepositoryDetails__stats-card'>
-            <span className='RepositoryDetails__stats-icon'>🍴</span>
-            <div>
-              <div className='RepositoryDetails__stats-value'>{repository.forksCount?.toLocaleString() || '0'}</div>
-              <div className='RepositoryDetails__stats-label'>Forks</div>
+          <Link to={`${repository.htmlUrl}/forks`} target='_blank'>
+            <div className='RepositoryDetails__stats-card'>
+              <span className='RepositoryDetails__stats-icon'>🍴</span>
+              <div>
+                <div className='RepositoryDetails__stats-value'>{repository.forksCount?.toLocaleString() || '0'}</div>
+                <div className='RepositoryDetails__stats-label'>Forks</div>
+              </div>
             </div>
-          </div>
+          </Link>
 
-          <div className='RepositoryDetails__stats-card'>
-            <span className='RepositoryDetails__stats-icon'>👁</span>
-            <div>
-              <div className='RepositoryDetails__stats-value'>{repository.watchersCount?.toLocaleString() || '0'}</div>
-              <div className='RepositoryDetails__stats-label'>Watchers</div>
+          <Link to={`${repository.htmlUrl}/watchers`} target='_blank'>
+            <div className='RepositoryDetails__stats-card'>
+              <span className='RepositoryDetails__stats-icon'>👁</span>
+              <div>
+                <div className='RepositoryDetails__stats-value'>{repository.watchersCount?.toLocaleString() || '0'}</div>
+                <div className='RepositoryDetails__stats-label'>Watchers</div>
+              </div>
             </div>
-          </div>
+          </Link>
 
-          <div className='RepositoryDetails__stats-card'>
-            <span className='RepositoryDetails__stats-icon'>🐛</span>
-            <div>
-              <div className='RepositoryDetails__stats-value'>{repository.openIssuesCount?.toLocaleString() || '0'}</div>
-              <div className='RepositoryDetails__stats-label'>Open Issues</div>
+          <Link to={`${repository.htmlUrl}/issues`} target='_blank'>
+            <div className='RepositoryDetails__stats-card'>
+              <span className='RepositoryDetails__stats-icon'>🐛</span>
+              <div>
+                <div className='RepositoryDetails__stats-value'>{repository.openIssuesCount?.toLocaleString() || '0'}</div>
+                <div className='RepositoryDetails__stats-label'>Open Issues</div>
+              </div>
             </div>
-          </div>
+          </Link>
         </section>
 
         <section className='RepositoryDetails__info'>
@@ -96,7 +115,7 @@ const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) =>
             {repository.license && (
               <div className='info-item'>
                 <span className='info-label'>License:</span>
-                <span className='info-value'>{repository.license}</span>
+                <span className='info-value'>{repository.license?.name || '–'}</span>
               </div>
             )}
 

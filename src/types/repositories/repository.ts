@@ -30,7 +30,7 @@ export interface Repository {
   watchersCount?: number
   // contributors?: Contributor[]
   topics?: string[]
-  license?: string
+  license?: Record<string, string>
   defaultBranch?: string
   createdAt?: string
   updatedAt?: string
