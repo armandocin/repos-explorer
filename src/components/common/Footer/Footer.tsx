@@ -1,3 +1,6 @@
+import reactLogo from '../../../assets/svg/react.svg'
+import viteLogo from '/vite.svg'
+import Text from '../../../@styleguide/components/Text/Text.tsx'
 import './Footer.css'
 
 const Footer = () => {
@@ -8,11 +11,22 @@ const Footer = () => {
       <div className='Container Footer__container'>
         <div className='Footer__content'>
           <div className='Footer__info'>
-            <h3 className='Footer__title'>GitHub Explorer</h3>
-            <p className='Footer__description'>
+            <h3 className='Footer__title'>Repos Explorer</h3>
+            <Text size='small' className='Footer__description'>
               Explore and discover amazing open source projects from GitHub.
               Built with React and passion for good code.
-            </p>
+            </Text>
+
+            <div className='Footer__powered'>
+              <span>Powered by</span>
+              <a href='https://react.dev' target='_blank' rel='noopener noreferrer'>
+                <img src={reactLogo} className='Footer__tech-logo' alt='React' />
+              </a>
+              <span>+</span>
+              <a href='https://vitejs.dev' target='_blank' rel='noopener noreferrer'>
+                <img src={viteLogo} className='Footer__tech-logo' alt='Vite' />
+              </a>
+            </div>
           </div>
 
           <div className='Footer__socials'>
@@ -60,9 +74,9 @@ const Footer = () => {
         <div className='Footer__divider' />
 
         <div className='Footer__bottom'>
-          <p className='Footer__copyright'>
-            © {currentYear} GitHub Explorer. All rights reserved.
-          </p>
+          <Text size='small' className='Footer__copyright'>
+            © {currentYear} Repos Explorer. All rights reserved.
+          </Text>
           <div className='Footer__credits'>
             Made with ❤️ by
             <a

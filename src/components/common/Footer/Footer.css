@@ -15,7 +15,7 @@
 
 .Footer__content {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     gap: 32px;
@@ -33,10 +33,7 @@
 }
 
 .Footer__description {
-    font-size: 14px;
     color: var(--text-secondary);
-    margin: 0;
-    line-height: 1.5;
 }
 
 .Footer__socials {
@@ -85,7 +82,7 @@
 }
 
 .Footer__copyright {
-    margin: 0;
+    color: var(--text-secondary);
 }
 
 .Footer__credits {
@@ -97,6 +94,26 @@
 .Footer__credits a {
     color: var(--primary-color);
     font-weight: 500;
+}
+
+.Footer__powered {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.Footer__tech-logo {
+    height: 20px;
+    width: auto;
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+}
+
+.Footer__tech-logo:hover {
+    transform: rotate(180deg) scale(1.1);
 }
 
 /* Dark mode adjustments */
@@ -136,6 +153,10 @@
         flex-direction: column;
         text-align: center;
         gap: 24px;
+    }
+
+    .Footer__powered {
+        justify-content: center;
     }
 
     .Footer__bottom {

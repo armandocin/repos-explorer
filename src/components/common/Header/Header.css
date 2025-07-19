@@ -21,13 +21,11 @@
     gap: 16px;
 }
 
-.Header__logo {
-    height: 40px;
-    transition: transform 0.3s ease;
+.Header__logo .logo-github {
+    fill: var(--primary-color);
 }
-
-.Header__logo:hover {
-    transform: rotate(180deg) scale(1.1);
+.Header__logo .logo-magnifier {
+    color: var(--secondary-color);
 }
 
 .Header__title {

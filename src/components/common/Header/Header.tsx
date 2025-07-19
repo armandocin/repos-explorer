@@ -1,4 +1,4 @@
-import reactLogo from '../../../assets/svg/react.svg'
+import Logo from '../../../@styleguide/components/Logo/Logo.tsx'
 import ThemeToggle from './ThemeToggle.tsx'
 
 import './Header.css'
@@ -8,11 +8,9 @@ const Header = () => {
     <header className='Header'>
       <div className='Container Header__container'>
         <div className='Header__brand'>
-          <a href='https://react.dev' target='_blank' rel='noopener noreferrer'>
-            <img src={reactLogo} className='Header__logo' alt='React logo' />
-          </a>
+          <Logo className='Logo--animated Header__logo' />
           <div>
-            <h1 className='Header__title'>GitHub Explorer</h1>
+            <h1 className='Header__title'>Repos Explorer</h1>
             <p className='Header__subtitle'>Discover amazing repositories</p>
           </div>
         </div>
