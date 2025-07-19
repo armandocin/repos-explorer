@@ -52,7 +52,7 @@ const SearchForm = ({ isLoading, onSubmit }: SearchFormProps): JSX.Element => {
         <Input
           name='query'
           type='search'
-          placeholder='Search repositories (press Enter)'
+          placeholder='Repository name'
           value={currentValue}
           onChange={setCurrentValue}
           aria-label='Search repositories'
