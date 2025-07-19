@@ -6,7 +6,6 @@
 }
 
 .Footer__container {
-    padding: 0 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -143,10 +142,6 @@
 @media (max-width: 768px) {
     .Footer {
         padding: 24px 0;
-    }
-
-    .Footer__container {
-        padding: 0 16px;
     }
 
     .Footer__content {

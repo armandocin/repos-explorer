@@ -9,7 +9,6 @@
 }
 
 .Header__container {
-    padding: 0 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -59,10 +58,6 @@
 }
 
 @media (max-width: 768px) {
-    .Header__container {
-        padding: 0 16px;
-    }
-
     .Header__title {
         font-size: 18px;
     }
