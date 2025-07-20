@@ -15,7 +15,7 @@ export const repositoryDetailsLoader = async ({ params }: LoaderFunctionArgs) =>
   try {
     const loadingRepositoryPromise =  store.dispatch(loadRepository({ owner, repo }))
       .then(unwrapResult)
-      .then(repository => repository.id)
+      .then(repository => repository.fullName)
 
     return { loadingRepository: loadingRepositoryPromise }
   } catch (error) {

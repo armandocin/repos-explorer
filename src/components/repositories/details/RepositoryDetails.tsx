@@ -22,12 +22,12 @@ import './RepositoryDetails.css'
  * @param {Object} props - The properties passed to the component.
  * @param {Promise<number>} props.loadingData - A promise resolving into the repository ID.
  */
-const RepositoryDetails = ({ loadingData }: { loadingData: Promise<number> }) => {
-  const id = use(loadingData)
+const RepositoryDetails = ({ loadingData }: { loadingData: Promise<string> }) => {
+  const fullName = use(loadingData)
 
   const goBack = useGoBack()
 
-  const repository = useAppSelector(state => selectRepository(state, id))
+  const repository = useAppSelector(state => selectRepository(state, fullName))
 
   return (
     <div className='RepositoryDetails'>

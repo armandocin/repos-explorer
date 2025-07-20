@@ -27,10 +27,10 @@ interface RepoCardProps {
  */
 const RepositoryCard = ({ repository }: RepoCardProps): JSX.Element => {
   const navigate = useNavigate()
-  const { owner, fullName, name, description, language, stargazersCount, htmlUrl, private: isPrivate } = repository
+  const { owner, fullName, description, language, stargazersCount, htmlUrl, private: isPrivate } = repository
 
   const handleOpenDetails = (): void => {
-    navigate(`/repos/${owner.login}/${name}`)
+    navigate(`/repos/${fullName}`)
   }
 
   return (

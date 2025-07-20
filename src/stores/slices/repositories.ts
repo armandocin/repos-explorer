@@ -18,7 +18,7 @@ import config from '../../config'
 
 interface RepositoriesState {
   entities: Record<number, Repository>,
-  ids: number[],
+  ids: string[],
   totalCount: number,
   isLoading: boolean,
   currentPage: number,
@@ -26,7 +26,9 @@ interface RepositoriesState {
 }
 
 /* ===== Normalizer ====== */
-export const repositoriesAdapter: EntityAdapter<Repository, number> = createEntityAdapter<Repository>()
+export const repositoriesAdapter: EntityAdapter<Repository, string> = createEntityAdapter<Repository, string>({
+  selectId: (repository: Repository) => repository.fullName
+})
 
 const initialState: RepositoriesState = repositoriesAdapter.getInitialState({
   totalCount: 0,
