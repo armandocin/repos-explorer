@@ -1,5 +1,6 @@
 import config from '../config'
-import type {ApiWrapperOptions, RequestHeaders} from '../types/api/common.ts'
+import type {ApiWrapperOptions, GitHubError, RequestHeaders} from '../types/api/common.ts'
+import {handleHttpError} from '../utils/errors.ts'
 
 const CONTENT_TYPE = 'application/json'
 
@@ -16,7 +17,7 @@ const CONTENT_TYPE = 'application/json'
  * @param {string} options.overrideBaseUrl An optional base URL to override the default configured base URL.
  * @return {Promise<Response>} A promise resolving to the response of the fetch request.
  */
-export function apiWrapper (
+export async function apiWrapper (
   method: string = '',
   endpoint: string,
   { path, payload, extraHeaders, params, overrideBaseUrl }: ApiWrapperOptions
@@ -42,12 +43,36 @@ export function apiWrapper (
   let search = new URLSearchParams(params)
   urlObj.search = search.toString()
 
-  return fetch(
-    urlObj.href,
-    {
-      method,
-      body: JSON.stringify(payload),
-      headers
+  try {
+    const response = await fetch(
+      urlObj.href,
+      {
+        method,
+        body: payload ? JSON.stringify(payload) : undefined,
+        headers
+      }
+    )
+
+    if (!response.ok) {
+      let errorData: GitHubError | undefined
+
+      try {
+        errorData = await response.json()
+      } catch {
+        // If JSON parsing fails, continue without error details
+      }
+
+      // This will throw an HttpError
+      handleHttpError(response.status, errorData)
     }
-  )
+
+    return response
+  } catch (error) {
+    if (error instanceof Error && error.name === 'HttpError') {
+      throw error
+    }
+
+    // For network errors or other issues
+    throw new Error('Network error. Please check your connection.')
+  }
 }
