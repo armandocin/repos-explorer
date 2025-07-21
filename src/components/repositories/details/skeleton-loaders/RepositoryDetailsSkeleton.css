@@ -22,3 +22,14 @@
 .RepositoryDetails__back--skeleton {
     display: block;
 }
+
+.RepositoryDetails--skeleton .RepositoryDetails__content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.RepositoryDetails--skeleton .RepositoryDetails__content > section:first-child {
+    padding-right: 16px;
+    margin-right: 16px;
+    border-right: 1px solid var(--border-color);
+}

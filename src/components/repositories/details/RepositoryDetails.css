@@ -179,23 +179,6 @@ a > .RepositoryDetails__stats-card:hover {
     color: var(--text-primary);
 }
 
-/* contributors */
-.RepositoryDetails__contributors {
-    margin-top: 32px;
-    margin-bottom: 16px;
-}
-
-.RepositoryDetails__contributors-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
-    gap: 64px;
-    word-break: break-word;
-}
-
-.RepositoryDetails__contributors-avatar {
-    display: inline-block;
-}
-
 /* Dark mode adjustments */
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme='light']) {

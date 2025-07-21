@@ -77,58 +77,65 @@ const RepositoryDetailsSkeleton = (): JSX.Element => {
         </div>
       </header>
 
-      {/* Stats section skeleton */}
-      <section className='RepositoryDetails__stats'>
-        {[1, 2, 3, 4].map(index => (
-          <div key={index} className='RepositoryDetails__stats-card RepositoryDetails__stats-card--skeleton'>
-            <span className='RepositoryDetails__stats-icon'>
-              <SkeletonLoader
-                variant='circular'
-                width={32}
-                height={32}
-              />
-            </span>
-            <div>
-              <div className='RepositoryDetails__stats-value'>
-                <SkeletonLoader
-                  variant='text'
-                  width={80}
-                  height={28}
-                />
+      {/* Content section */}
+      <div className='RepositoryDetails__content'>
+        {/* Left column - Stats */}
+        <section>
+          <div className='RepositoryDetails__stats'>
+            {[1, 2, 3, 4].map(index => (
+              <div key={index} className='RepositoryDetails__stats-card RepositoryDetails__stats-card--skeleton'>
+                <span className='RepositoryDetails__stats-icon'>
+                  <SkeletonLoader
+                    variant='circular'
+                    width={32}
+                    height={32}
+                  />
+                </span>
+                <div>
+                  <div className='RepositoryDetails__stats-value'>
+                    <SkeletonLoader
+                      variant='text'
+                      width={80}
+                      height={28}
+                    />
+                  </div>
+                  <div className='RepositoryDetails__stats-label'>
+                    <SkeletonLoader
+                      {...textPatterns.caption}
+                      width={60}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className='RepositoryDetails__stats-label'>
-                <SkeletonLoader
-                  {...textPatterns.caption}
-                  width={60}
-                />
-              </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </section>
+        </section>
 
-      {/* Info section skeleton */}
-      <section className='RepositoryDetails__info'>
-        <div className='RepositoryDetails__info-grid'>
-          {[1, 2, 3, 4].map(index => (
-            <div key={index} className='RepositoryDetails__info-item'>
-              <span className='RepositoryDetails__info-label'>
-                <SkeletonLoader
-                  {...textPatterns.caption}
-                  width={100}
-                />
-              </span>
-              <span className='RepositoryDetails__info-value'>
-                <SkeletonLoader
-                  variant='text'
-                  width={150}
-                  height={20}
-                />
-              </span>
+        {/* Right column - Info */}
+        <div>
+          <section className='RepositoryDetails__info'>
+            <div className='RepositoryDetails__info-grid'>
+              {[1, 2, 3, 4].map(index => (
+                <div key={index} className='RepositoryDetails__info-item'>
+                  <span className='RepositoryDetails__info-label'>
+                    <SkeletonLoader
+                      {...textPatterns.caption}
+                      width={100}
+                    />
+                  </span>
+                  <span className='RepositoryDetails__info-value'>
+                    <SkeletonLoader
+                      variant='text'
+                      width={150}
+                      height={20}
+                    />
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
+          </section>
         </div>
-      </section>
+      </div>
     </div>
   )
 }

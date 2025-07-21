@@ -1,4 +1,6 @@
-import { use } from 'react'
+import type { RepositoryDetailsLoaderResponse } from '../../../router/loaders/repositories.ts'
+
+import {use, useEffect} from 'react'
 import { useAppSelector } from '../../../hooks/store.ts'
 import useGoBack from '../../../hooks/common/router/useGoBack.ts'
 
@@ -8,7 +10,8 @@ import { selectRepository } from '../../../stores/slices/repositories.ts'
 import ArrowLeft from '../../../assets/svg/ic-arrow-left.svg?react'
 import { Link } from 'react-router-dom'
 import LanguageDot from '../../common/repositories/LanguageDot.tsx'
-import { Avatar, Button, Text } from '../../../@styleguide'
+import { Avatar, Button } from '../../../@styleguide'
+import TopContributors from './TopContributors.tsx'
 
 import './RepositoryDetails.css'
 
@@ -22,12 +25,17 @@ import './RepositoryDetails.css'
  * @param {Object} props - The properties passed to the component.
  * @param {Promise<number>} props.loadingData - A promise resolving into the repository ID.
  */
-const RepositoryDetails = ({ loadingData }: { loadingData: Promise<string> }) => {
-  const fullName = use(loadingData)
+const RepositoryDetails = ({ loadingData }: { loadingData: Promise<RepositoryDetailsLoaderResponse> }) => {
+  const { fullName, owner, repo } = use(loadingData)
 
   const goBack = useGoBack()
 
   const repository = useAppSelector(state => selectRepository(state, fullName))
+
+  /* EFFECTS */
+  useEffect(() => {
+    window.scrollTo({ top: 0 })
+  }, [])
 
   return (
     <div className='RepositoryDetails'>
@@ -151,35 +159,7 @@ const RepositoryDetails = ({ loadingData }: { loadingData: Promise<string> }) =>
             </div>
           </section>
 
-          {repository.contributors && repository.contributors.length > 0 && (
-            <section className='RepositoryDetails__contributors'>
-              <h4>Top Contributors</h4>
-              <div className='RepositoryDetails__contributors-grid'>
-                {repository.contributors.map(contributor => (
-                  <div>
-                    <Link
-                      key={contributor.id}
-                      to={contributor.htmlUrl}
-                      target='_blank'
-                      className='RepositoryDetails__contributors-avatar'
-                    >
-                      <Avatar
-                        img={contributor.avatarUrl}
-                        name={contributor.login}
-                        size='medium'
-                      />
-                    </Link>
-                    <div className='RepositoryDetails__contributors-info'>
-                      <Text><strong>{contributor.login}</strong></Text>
-                      <Text size='small'>
-                        {contributor.contributions} contributions
-                      </Text>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
+          <TopContributors owner={owner} repo={repo} contributors={repository.contributors || []} />
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
-import type {Repository} from '../../types/repositories/repository.ts'
-import type {GitHubSearchResponse} from '../../types/api/search.ts'
-import type {RootState} from '../store.ts'
+import type { Repository } from '../../types/repositories/repository.ts'
+import type { GitHubSearchResponse } from '../../types/api/search.ts'
+import type { RootState } from '../store.ts'
+import type { Contributor } from '../../types/users/user.ts'
 
 import {
   type PayloadAction,
@@ -12,7 +13,12 @@ import {
   isAnyOf, isFulfilled
 } from '@reduxjs/toolkit'
 
-import { fetchOwnerRepositories, loadRepository, searchRepositories } from '../actions/repositories.ts'
+import {
+  fetchOwnerRepositories,
+  loadRepoContributors,
+  loadRepository,
+  searchRepositories
+} from '../actions/repositories.ts'
 
 import config from '../../config'
 
@@ -67,8 +73,19 @@ const repositoriesSlice = createSlice({
         repositoriesAdapter.setAll(state, action.payload.items)
       })
 
-      .addMatcher(isFulfilled(loadRepository), (state, action:PayloadAction<Repository>) => {
+      .addMatcher(isFulfilled(loadRepository), (state, action: PayloadAction<Repository>) => {
         repositoriesAdapter.upsertOne(state, action.payload)
+      })
+
+      .addMatcher(isFulfilled(loadRepoContributors), (state, action: PayloadAction<Contributor[], string, { arg: { owner: string; repo: string } }>) => {
+        const { owner, repo } = action.meta.arg
+        repositoriesAdapter.upsertOne(
+          state,
+          {
+            fullName: `${owner}/${repo}`,
+            contributors: action.payload
+          } as Repository
+        )
       })
 
       .addMatcher(fulfilledListOfReposActions, (state, action: PayloadAction<Repository[]>) => {

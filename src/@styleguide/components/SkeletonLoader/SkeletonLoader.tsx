@@ -68,7 +68,7 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
 
   // Render single skeleton
   const renderSkeleton = (key?: number, customWidth?: string) => (
-    <span
+    <div
       key={key}
       className={classNames}
       style={{

@@ -1,6 +1,5 @@
 /* Base styles */
 .SkeletonLoader {
-    display: inline-block;
     background-color: var(--grey-200);
     overflow: hidden;
     position: relative;

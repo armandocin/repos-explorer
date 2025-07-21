@@ -1,6 +1,7 @@
 import type { GitHubSearchResponse } from '../../types/api/search.ts'
 import type { RootState } from '../store.ts'
 import type { Repository } from '../../types/repositories/repository.ts'
+import type { Contributor } from '../../types/users/user.ts'
 
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
@@ -11,15 +12,14 @@ import { fetchContributors, fetchRepository } from '../../api/endpoints/repos.ts
 export const loadRepository = createAsyncThunk(
   'repositories/fetchOwnerRepository',
   async ({ owner, repo }: { owner: string; repo: string }): Promise<Repository> => {
-    const [repository, contributors] = await Promise.all([
-      fetchRepository(owner, repo),
-      fetchContributors(owner, repo, { per_page: '10' })
-    ])
+    return fetchRepository(owner, repo)
+  }
+)
 
-    return {
-      ...repository,
-      contributors
-    }
+export const loadRepoContributors = createAsyncThunk(
+  'repositories/fetchRepoContributors',
+  async ({ owner, repo }: { owner: string; repo: string }): Promise<Contributor[]> => {
+    return fetchContributors(owner, repo, { per_page: '10' })
   }
 )
 
