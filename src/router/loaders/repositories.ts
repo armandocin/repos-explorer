@@ -5,6 +5,12 @@ import { unwrapResult } from '@reduxjs/toolkit'
 
 import { loadRepository } from '../../stores/actions/repositories.ts'
 
+export interface RepositoryDetailsLoaderResponse {
+  fullName: string
+  owner: string
+  repo: string
+}
+
 export const repositoryDetailsLoader = async ({ params }: LoaderFunctionArgs) => {
   const { owner, repo } = params
 
@@ -13,9 +19,9 @@ export const repositoryDetailsLoader = async ({ params }: LoaderFunctionArgs) =>
   }
 
   try {
-    const loadingRepositoryPromise =  store.dispatch(loadRepository({ owner, repo }))
+    const loadingRepositoryPromise: Promise<RepositoryDetailsLoaderResponse> =  store.dispatch(loadRepository({ owner, repo }))
       .then(unwrapResult)
-      .then(repository => repository.id)
+      .then(repository => ({ fullName: repository.fullName, owner, repo }))
 
     return { loadingRepository: loadingRepositoryPromise }
   } catch (error) {

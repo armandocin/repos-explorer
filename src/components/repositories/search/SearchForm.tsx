@@ -37,24 +37,32 @@ interface SearchFormProps {
  */
 const SearchForm = ({ isLoading, onSubmit }: SearchFormProps): JSX.Element => {
   const [currentValue, setCurrentValue] = useState('')
+  const [isCompact, setIsCompact] = useState(false)
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (currentValue) {
+      setIsCompact(true)
       await onSubmit(currentValue)
     }
   }
 
+  const handleChange = async (value: string) => {
+    if (value.trim() || !value) {
+      setCurrentValue(value.replace(/\s+/g, '-'))
+    }
+  }
+
   return (
-    <form className='SearchForm' onSubmit={handleSubmit}>
+    <form className={`SearchForm ${isCompact ? 'SearchForm--compact' : ''}`} onSubmit={handleSubmit}>
       <h1>Search GitHub repositories</h1>
       <div className='SearchForm__input'>
         <Input
           name='query'
           type='search'
-          placeholder='Search repositories (press Enter)'
+          placeholder='Repository name'
           value={currentValue}
-          onChange={setCurrentValue}
+          onChange={handleChange}
           aria-label='Search repositories'
           autoComplete='off'
           required

@@ -1,6 +1,7 @@
-import type {Repository} from '../../types/repositories/repository.ts'
-import type {GitHubSearchResponse} from '../../types/api/search.ts'
-import type {RootState} from '../store.ts'
+import type { Repository } from '../../types/repositories/repository.ts'
+import type { GitHubSearchResponse } from '../../types/api/search.ts'
+import type { RootState } from '../store.ts'
+import type { Contributor } from '../../types/users/user.ts'
 
 import {
   type PayloadAction,
@@ -12,13 +13,18 @@ import {
   isAnyOf, isFulfilled
 } from '@reduxjs/toolkit'
 
-import { fetchOwnerRepositories, loadRepository, searchRepositories } from '../actions/repositories.ts'
+import {
+  fetchOwnerRepositories,
+  loadRepoContributors,
+  loadRepository,
+  searchRepositories
+} from '../actions/repositories.ts'
 
 import config from '../../config'
 
 interface RepositoriesState {
   entities: Record<number, Repository>,
-  ids: number[],
+  ids: string[],
   totalCount: number,
   isLoading: boolean,
   currentPage: number,
@@ -26,7 +32,9 @@ interface RepositoriesState {
 }
 
 /* ===== Normalizer ====== */
-export const repositoriesAdapter: EntityAdapter<Repository, number> = createEntityAdapter<Repository>()
+export const repositoriesAdapter: EntityAdapter<Repository, string> = createEntityAdapter<Repository, string>({
+  selectId: (repository: Repository) => repository.fullName
+})
 
 const initialState: RepositoriesState = repositoriesAdapter.getInitialState({
   totalCount: 0,
@@ -65,8 +73,19 @@ const repositoriesSlice = createSlice({
         repositoriesAdapter.setAll(state, action.payload.items)
       })
 
-      .addMatcher(isFulfilled(loadRepository), (state, action:PayloadAction<Repository>) => {
+      .addMatcher(isFulfilled(loadRepository), (state, action: PayloadAction<Repository>) => {
         repositoriesAdapter.upsertOne(state, action.payload)
+      })
+
+      .addMatcher(isFulfilled(loadRepoContributors), (state, action: PayloadAction<Contributor[], string, { arg: { owner: string; repo: string } }>) => {
+        const { owner, repo } = action.meta.arg
+        repositoriesAdapter.upsertOne(
+          state,
+          {
+            fullName: `${owner}/${repo}`,
+            contributors: action.payload
+          } as Repository
+        )
       })
 
       .addMatcher(fulfilledListOfReposActions, (state, action: PayloadAction<Repository[]>) => {

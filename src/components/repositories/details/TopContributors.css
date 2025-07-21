@@ -1,0 +1,15 @@
+.RepositoryDetails__contributors {
+    margin-top: 32px;
+    margin-bottom: 16px;
+}
+
+.RepositoryDetails__contributors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+    gap: 64px;
+    word-break: break-word;
+}
+
+.RepositoryDetails__contributors-avatar {
+    display: inline-block;
+}

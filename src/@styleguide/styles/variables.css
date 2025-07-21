@@ -54,9 +54,9 @@
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* Dark Mode */
+/* Supports both data-theme and prefers-color-scheme */
 @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme='light']) {
         --primary-light-color: #006C70;
         --primary-dark-color: #4FBCC0;
 
@@ -65,8 +65,12 @@
         --surface-hover: #242B47;
         --text-primary: var(--grey-100);
         --text-secondary: var(--grey-300);
-        --border-color: var(--grey-400);
-        --border-color-hover: var(--grey-200);
+        --border-color: var(--grey-700);
+        --border-color-hover: var(--grey-600);
         --badge-background-color: rgba(0, 0, 0, 0.2);
+
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
     }
 }

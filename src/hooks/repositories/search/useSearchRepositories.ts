@@ -4,8 +4,10 @@ import { useState, useCallback, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../store.ts'
 
-import { selectRepositories, setPage } from '../../../stores/slices/repositories.ts'
+import { clearRepositories, selectRepositories, setPage } from '../../../stores/slices/repositories.ts'
 import { searchRepositories } from '../../../stores/actions/repositories.ts'
+
+import { getErrorMessage } from '../../../utils/errors.ts'
 
 interface UseSearchFormReturn {
   repositories: Repository[],
@@ -60,6 +62,7 @@ const useSearchRepositories = (initialQuery: string = ''): UseSearchFormReturn =
     setIsLoading(true)
 
     if (isNewQuery) {
+      dispatch(clearRepositories())
       setLastQuery(query)
     }
 
@@ -71,7 +74,8 @@ const useSearchRepositories = (initialQuery: string = ''): UseSearchFormReturn =
       await dispatch(searchRepositories(query)).unwrap()
     } catch (err) {
       console.error(err) // should be logged somewhere
-      setError('Failed to search repositories. Please try again.')
+      const errorMessage = getErrorMessage(err)
+      setError(errorMessage)
     } finally {
       setIsLoading(false)
     }

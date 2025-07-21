@@ -7,4 +7,9 @@ export default defineConfig({
     react(),
     svgr()
   ],
+  base: '/fe-interview-armandocin.arduino.cc/',
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+  }
 })

@@ -2,7 +2,7 @@ import SearchRepositories from '../../components/repositories/search/SearchRepos
 
 const Search = () => {
   return (
-    <div className='Container'>
+    <div className='Container Page'>
       <SearchRepositories />
     </div>
   )
