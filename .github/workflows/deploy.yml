@@ -32,13 +32,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'yarn'
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Build
-        run: npm run build
+        run: yarn build
         env:
           # GitHub API base URL from your .env file
           VITE_GITHUB_API_BASE_URL: 'https://api.github.com'
