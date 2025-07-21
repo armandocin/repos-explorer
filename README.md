@@ -8,7 +8,7 @@
 
 Repos Explorer is a modern web application for searching, discovering, and viewing details about GitHub repositories. It is built with a focus on performance, scalability, and a clean user experience, featuring a custom component library, robust state management, and efficient data fetching patterns.
 
-**[➡️ View Live Demo](https://armandocin.github.io/fe-interview-armandocin.arduino.cc/)**
+**[➡️ View Live Demo](https://armandocin.github.io/repos-explorer/)**
 
 
 ## 🚀 Getting Started
@@ -25,13 +25,13 @@ Follow these instructions to get a copy of the project up and running on your lo
 1.  **Clone the repository:**
 
     ```sh
-    git clone https://github.com/armandocin/fe-interview-armandocin.arduino.cc.git
+    git clone https://github.com/armandocin/repos-explorer.git
     ```
 
 2.  **Navigate to the project directory:**
 
     ```sh
-    cd fe-interview-armandocin.arduino.cc-master
+    cd repos-explorer
     ```
 
 3.  **Install dependencies:**

@@ -31,7 +31,7 @@ const Footer = () => {
 
           <div className='Footer__socials'>
             <a
-              href='https://github.com/armandocin/fe-interview-armandocin.arduino.cc/'
+              href='https://github.com/armandocin/repos-explorer/'
               target='_blank'
               rel='noopener noreferrer'
               className='Footer__social-link'
