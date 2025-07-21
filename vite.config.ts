@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     svgr()
   ],
-  base: '/repos-explorer/',
+  base: '/repos-explorer',
   build: {
     outDir: 'dist',
     sourcemap: true,

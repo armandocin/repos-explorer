@@ -14,7 +14,7 @@ import PageLoad from '../components/common/errors/PageLoad.tsx'
  * is the function to create the routing rules. The Layout is used as generic layout with header and footer for every pages passed as children.
  * Children are rendered in the <Outlet> component.
  */
-export default createBrowserRouter([
+const createRouter = createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
@@ -35,3 +35,5 @@ export default createBrowserRouter([
         ]
     }
 ])
+
+export default createRouter
