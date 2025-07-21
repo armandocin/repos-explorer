@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:local": "tsc -b && vite build --config vite.config.local.ts",
+    "build:gh-pages": "tsc -b && vite build && cp dist/index.html dist/404.html",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest",
-    "build:gh-pages": "tsc -b && vite build && cp dist/index.html dist/404.html"
+    "preview:local": "vite preview --config vite.config.local.ts",
+    "test": "vitest"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
